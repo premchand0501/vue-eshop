@@ -36,13 +36,13 @@ export default class SwiperWrapper extends Vue {
       autoplay: true,
       spaceBetween: 20,
       navigation: {
-        nextEl: this.$refs.mySwiperNextBtn as SelectableElement,
-        prevEl: this.$refs.mySwiperPrevBtn as SelectableElement
+        nextEl: this.$refs.mySwiperNextBtn as HTMLElement,
+        prevEl: this.$refs.mySwiperPrevBtn as HTMLElement
       }
     };
     console.log(this.mySwiperNextBtn);
     this.mySwiper = new Swiper(
-      this.$refs.swiperContainer as SelectableElement,
+      this.$refs.swiperContainer as HTMLElement,
       this.swiperOptions
     );
   }
