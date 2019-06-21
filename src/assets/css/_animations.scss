@@ -1,0 +1,93 @@
+
+.fall-in-enter-active{
+    animation: fallIn 0.2s ease 1 forwards;
+    opacity: 0;
+}
+.fall-in-leave-active{
+    animation: fallIn 0.2s ease 1 reverse;
+    opacity: 0;
+}
+@keyframes fallIn {
+    0%{
+        opacity: 0;
+        transform: scale(2);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.slide-fade-enter-active {
+  animation: slideFade .25s forwards 1;
+}
+.slide-fade-leave-active {
+  animation: slideFade .25s reverse 1;
+}
+@keyframes slideFade {
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+.reveal-enter-active {
+animation: revealAnimIn 0.25s ease forwards 1;
+}
+.reveal-leave-active {
+animation: revealAnimOut 0.25s 0.25s ease forwards 1;
+}
+.fade-anim-enter-active {
+animation: fadeAnimIn 0.25s ease forwards 1;
+}
+.fade-anim-leave-active {
+animation: fadeAnimOut 0.25s ease forwards 1;
+}
+@keyframes revealAnimIn {
+0% {
+    transform: scale(0);
+    border-bottom-left-radius: 100%;
+    opacity: 0.5;
+}
+50% {
+    border-bottom-left-radius: 80%;
+}
+100% {
+    transform: scale(1);
+    border-bottom-left-radius: 0%;
+    opacity: 1;
+}
+}
+@keyframes revealAnimOut {
+0% {
+    transform: scale(1);
+    border-bottom-left-radius: 0%;
+    opacity: 1;
+}
+100% {
+    transform: scale(0);
+    border-bottom-left-radius: 100%;
+    opacity: 0;
+}
+}
+@keyframes fadeAnimIn {
+0% {
+    transform: translateY(10px);
+    opacity: 0;
+}
+100% {
+    transform: translateY(0);
+    opacity: 1;
+}
+}
+@keyframes fadeAnimOut {
+0% {
+    transform: translateY(0px);
+    opacity: 1;
+}
+100% {
+    transform: translateY(10px);
+    opacity: 0;
+}
+}
