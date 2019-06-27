@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-xs navbar-dark shoppingNav">
+  <nav class="navbar navbar-expand-xs navbar-dark fixed-top shoppingNav">
     <button class="navbar-toggler" type="button" @click="showSideMenu">
       <span class="navbar-toggler-icon"></span>
     </button>

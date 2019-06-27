@@ -23,6 +23,11 @@ export default new Router({
           component: ()=>import(/* webpackChunkName: "CreateCategory" */ './views/Shopping/CreateCategory.vue'),
         }
       ]
+    },
+    {
+      path: '/product-list',
+      name: 'product-list',
+      component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
     }
   ],
 });

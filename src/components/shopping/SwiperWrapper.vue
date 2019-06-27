@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid p-0">
     <div ref="swiperContainer" class="swiper-container">
       <div class="swiper-wrapper">
         <!-- Slides -->
@@ -30,7 +30,14 @@ export default class SwiperWrapper extends Vue {
   mySwiperPrevBtn!: HTMLElement;
   mySwiperPagination!: HTMLElement;
   swiperOptions!: SwiperOptions;
-
+  created(){
+    window.addEventListener('resize', this.updateSwiper);
+  }
+  updateSwiper(){
+    this.mySwiper.update();
+    this.mySwiper.detachEvents();
+    this.mySwiper.attachEvents();
+  }
   mounted() {
     this.swiperOptions = {
       autoplay: true,
@@ -38,6 +45,10 @@ export default class SwiperWrapper extends Vue {
       navigation: {
         nextEl: this.$refs.mySwiperNextBtn as HTMLElement,
         prevEl: this.$refs.mySwiperPrevBtn as HTMLElement
+      },
+      pagination: {
+        el: this.$refs.mySwiperPagination as HTMLElement,
+        clickable: true
       }
     };
     console.log(this.mySwiperNextBtn);
@@ -46,10 +57,9 @@ export default class SwiperWrapper extends Vue {
       this.swiperOptions
     );
   }
-  nextSlide() {
-    // this.mySwiper.navigation();
+  destroyed(){
+    window.removeEventListener('resize', this.updateSwiper);
   }
-  prevSlide() {}
 }
 </script>
 <style lang="scss" scoped>

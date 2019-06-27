@@ -25,9 +25,14 @@ export default class SideMenu extends Vue {
     this.$store.dispatch('toggleNavbar', false);
   }
   async getCategories() {
-    const res = await fetch(
-      "https://app.fakejson.com/q/sIS5o7HN?token=LCH9in38EoBiTWrgDp1OTg"
-    );
+    const res = await fetch("http://localhost:4000/categories", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Type': 'application/json'
+      },
+      body: JSON.stringify( { query: '{categories}'})
+    });
     const jsonData = await res.json();
     if (jsonData.hasOwnProperty("category_list")) {
       const categories: ShoppingCategory[] = jsonData[
@@ -51,6 +56,7 @@ export default class SideMenu extends Vue {
   max-width: 100%;
   display: block;
   cursor: w-resize;
+  z-index: 1030;
 
   > .container {
     cursor: auto;
