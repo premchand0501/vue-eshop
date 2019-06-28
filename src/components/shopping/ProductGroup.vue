@@ -11,13 +11,13 @@
                 class="img-fluid"
               >
               <div>
-                <h5>Ducati &amp; Giordano</h5>
+                <h5>{{productProp.title}}</h5>
                 <p>
-                  <small>Under ₹799|Backpacks</small>
+                  <small>{{productProp.description}}</small>
                 </p>
               </div>
             </div>
-            <button class="btn btn-primary">View All</button>
+            <button class="btn btn-primary" @click="addNewProduct">View All</button>
           </div>
         </div>
       </div>
@@ -25,78 +25,23 @@
     <div class="row">
       <div class="container">
         <div class="row">
-          <div class="col col-6 col-md-3 col-sm-4 mb-3">
+          <div class="col col-6 col-md-3 col-sm-4 mb-3" 
+            v-for="(prod, index) in productProp.products"
+            :key="`product_${index}`">
             <div class="productWrapp">
               <div class="productImage">
                 <img
-                  src="https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100"
-                  alt="product"
+                  :src="prod.image"
+                  :alt="prod.title"
                   class="img-fluid"
                 >
               </div>
               <div class="productDetails text-center">
-                <p>Ducati DAYPACK 24 L Laptop Backpack</p>
+                <p>{{ prod.title }}</p>
                 <p>
-                  <span>₹560</span>&nbsp;
-                  <span class="text-decoration-line-through">2799</span>&nbsp;
-                  <span class="text-success">79% off</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col col-6 col-md-3 col-sm-4 mb-3">
-            <div class="productWrapp">
-              <div class="productImage">
-                <img
-                  src="https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100"
-                  alt="product"
-                  class="img-fluid"
-                >
-              </div>
-              <div class="productDetails text-center">
-                <p>Ducati DAYPACK 24 L Laptop Backpack</p>
-                <p>
-                  <span>₹560</span>&nbsp;
-                  <span class="text-decoration-line-through">2799</span>&nbsp;
-                  <span class="text-success">79% off</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col col-6 col-md-3 col-sm-4 mb-3">
-            <div class="productWrapp">
-              <div class="productImage">
-                <img
-                  src="https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100"
-                  alt="product"
-                  class="img-fluid"
-                >
-              </div>
-              <div class="productDetails text-center">
-                <p>Ducati DAYPACK 24 L Laptop Backpack</p>
-                <p>
-                  <span>₹560</span>&nbsp;
-                  <span class="text-decoration-line-through">2799</span>&nbsp;
-                  <span class="text-success">79% off</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col col-6 col-md-3 col-sm-4 mb-3">
-            <div class="productWrapp">
-              <div class="productImage">
-                <img
-                  src="https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100"
-                  alt="product"
-                  class="img-fluid"
-                >
-              </div>
-              <div class="productDetails text-center">
-                <p>Ducati DAYPACK 24 L Laptop Backpack</p>
-                <p>
-                  <span>₹560</span>&nbsp;
-                  <span class="text-decoration-line-through">2799</span>&nbsp;
-                  <span class="text-success">79% off</span>
+                  <span>₹{{ prod.discountedPrice }}</span>&nbsp;
+                  <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
+                  <span class="text-success">{{ prod.discount }}% off</span>
                 </p>
               </div>
             </div>
@@ -107,9 +52,29 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { IProductGroup, IProduct } from '../../interface/IProduct';
+
 @Component
 export default class ProductGroup extends Vue {
+  @Prop() productProp!: IProductGroup;
+  mounted(){
+    console.log(this.productProp);
+  }
+  addNewProduct(){
+    const newProd: IProduct = {
+        "name": "Ducati DAYPACK 24 L Laptop Backpack",
+        "description": "",
+        "image": "https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100",
+        "discount": 79,
+        "price": 2799,
+        "discountedPrice": 560,
+        "category": "Laptop Backpack",
+        "brand": "Ducati",
+        "groupId": this.productProp.id
+    }
+    this.$store.dispatch("addProductToGroup", newProd);
+  }
 }
 </script>
 <style lang="scss" scoped>

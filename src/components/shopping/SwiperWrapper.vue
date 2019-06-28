@@ -51,7 +51,6 @@ export default class SwiperWrapper extends Vue {
         clickable: true
       }
     };
-    console.log(this.mySwiperNextBtn);
     this.mySwiper = new Swiper(
       this.$refs.swiperContainer as HTMLElement,
       this.swiperOptions

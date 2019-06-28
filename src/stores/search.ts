@@ -1,18 +1,18 @@
 import { ActionContext, Module } from 'vuex';
-import { Search } from '@/interface/Search';
-import { RootStore } from '@/interface/RootStore';
+import { ISearch } from '@/interface/ISearch';
+import { IRootStore } from '@/interface/IRootStore';
 
-export const search:Module<Search, RootStore> = {
+export const search:Module<ISearch, IRootStore> = {
     state: {
         searchKeywords: []
     },
     getters: {
-        searchKeywords(state: Search){
+        searchKeywords(state: ISearch){
             return state.searchKeywords;
         }
     },
     mutations: {
-        addSearchKeyword(state: Search, item: string){
+        addSearchKeyword(state: ISearch, item: string){
             if(item !== ''){
                 const searches:string[] = state.searchKeywords.filter(i=>i.length > 0);
                 searches.push(item);
@@ -22,7 +22,7 @@ export const search:Module<Search, RootStore> = {
         }
     },
     actions: {
-        addSearchKeyword(context: ActionContext<Search, RootStore>, searchKey: string){
+        addSearchKeyword(context: ActionContext<ISearch, IRootStore>, searchKey: string){
             context.commit('addSearchKeyword', searchKey);
         }
     }

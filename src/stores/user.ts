@@ -1,17 +1,17 @@
-import { LoginData } from '@/interface/LoginData';
+import { ILoginData } from '@/interface/ILoginData';
 import { Module } from 'vuex';
-import { RootStore } from '@/interface/RootStore';
+import { IRootStore } from '@/interface/IRootStore';
 
-export const user: Module<LoginData, RootStore> = {
+export const user: Module<ILoginData, IRootStore> = {
     state: {
         loginStatus: false,
         profileData: undefined
     },
     getters: {
-        loginStatus(state: LoginData){
+        loginStatus(state: ILoginData){
             return state.loginStatus;
         },
-        profileData(state: LoginData){
+        profileData(state: ILoginData){
             return state.profileData;
         }
     },

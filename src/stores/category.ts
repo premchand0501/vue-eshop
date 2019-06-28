@@ -1,30 +1,34 @@
 import { ActionContext, Module } from 'vuex';
-import { Category } from '@/interface/Category';
-import { ShoppingCategory } from '@/interface/ShoppingCategory';
-import { RootStore } from '@/interface/RootStore';
+import { ICategory, IShoppingCategory } from '@/interface/ICategory';
+import { IRootStore } from '@/interface/IRootStore';
 
-export const category: Module<Category, RootStore> = {
+import { firebaseStorage } from '@/main';
+
+export const category: Module<ICategory, IRootStore> = {
     state: {
         shoppingList: []
     },
     getters: {
-        shoppingList(state: Category){
+        shoppingList(state: ICategory){
             return state.shoppingList
         }
     },
     mutations:{
-        loadCategory(state: Category, items: ShoppingCategory[]){
-            state.shoppingList = items;
+        loadCategory(state: ICategory){
+            firebaseStorage.ref('categories').on('value', (snapshot)=>{
+                state.shoppingList = snapshot.val();
+                console.log(state.shoppingList);
+            })
         },
-        addCategory(state: Category, item: ShoppingCategory){
-            state.shoppingList.push(item);
+        addCategory(state: ICategory, item: IShoppingCategory){
+            firebaseStorage.ref('categories/'+state.shoppingList.length).set(item);
         }
     },
     actions:{
-        loadCategory(context: ActionContext<Category, RootStore>, categories: ShoppingCategory[]){
-            context.commit('loadCategory', categories);
+        loadCategory(context: ActionContext<ICategory, IRootStore>){
+            context.commit('loadCategory');
         },
-        addCategory(context: ActionContext<Category, RootStore>, category: ShoppingCategory){
+        addCategory(context: ActionContext<ICategory, IRootStore>, category: IShoppingCategory){
             context.commit('addCategory', category);
         }
     }

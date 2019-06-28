@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -8,26 +7,57 @@ export default new Router({
   routes: [
     {
       path: '/',
-      // name: 'home',
-      // component: Home,
-      redirect: '/shopping'
-    },
-    {
-      path: '/shopping',
-      name: 'shopping',
       component: ()=>import(/* webpackChunkName: "Shopping" */ './views/Shopping/Shopping.vue'),
       children: [
         {
-          path: 'create-category',
-          name: 'CreateCategory',
-          component: ()=>import(/* webpackChunkName: "CreateCategory" */ './views/Shopping/CreateCategory.vue'),
+          path: 'product-list',
+          name: 'product-list',
+          component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
         }
       ]
     },
     {
-      path: '/product-list',
-      name: 'product-list',
-      component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
+      path: '/admin',
+      beforeEnter: (to, from, next)=>{
+        const token = localStorage.getItem("token");
+        if(token != null && token != "") {
+          next();
+        }
+        else {
+          next({
+            name: 'Auth',
+            params: { redirectUrl: from.fullPath}
+          });
+        }
+      },
+      children: [
+        {
+          path: 'create-category',
+          name: 'CreateCategory',
+          component: ()=>import(/* webpackChunkName: "CreateCategory" */ './views/admin/CreateCategory.vue')
+        }
+      ]
+    },
+    {
+      path: '/auth',
+      name: 'Auth',
+      beforeEnter: (to, from, next)=>{
+        const token = localStorage.getItem("token");
+        console.log(token);
+        if(token != null && token != "") {
+          next({
+            name: 'CreateCategory'
+          });
+        }
+        else {
+          next();
+        }
+      },
+      component: ()=>import(/* webpackChunkName: "Auth" */ './views/admin/Auth.vue'),
+    },
+    {
+      path: '**',
+      component: ()=>import(/* webpackChunkName: "404" */ './views/404.vue')
     }
   ],
 });

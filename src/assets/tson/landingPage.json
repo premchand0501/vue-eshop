@@ -1,0 +1,38 @@
+[
+    {
+        "id": 0,
+        "title": "Ducati & Giordano",
+        "description": "Under ₹799 | Backpacks",
+        "products": [
+            {
+                "name": "Ducati DAYPACK 24 L Laptop Backpack",
+                "description": "",
+                "image": "https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100",
+                "discount": 79,
+                "price": 2799,
+                "discountedPrice": 560,
+                "category": "Laptop Backpack",
+                "brand": "Ducati",
+                "groupId": 0
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "title": "Ducati & Giordano",
+        "description": "Under ₹799 | Backpacks",
+        "products": [
+            {
+                "name": "Ducati DAYPACK 24 L Laptop Backpack",
+                "description": "",
+                "image": "https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100",
+                "discount": 79,
+                "price": 2799,
+                "discountedPrice": 560,
+                "category": "Laptop Backpack",
+                "brand": "Ducati",
+                "groupId": 1
+            }
+        ]
+    }
+]

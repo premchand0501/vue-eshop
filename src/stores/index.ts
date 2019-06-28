@@ -5,11 +5,12 @@ import { category } from './category';
 import { user } from './user';
 import { search } from './search';
 import { navbar } from './navbar';
-import { RootStore } from '@/interface/RootStore';
+import { landingPageProducts } from './landingPageProducts';
+import { IRootStore } from '@/interface/IRootStore';
 
 Vue.use(Vuex);
 
-export const store: Store<RootStore> = new Vuex.Store<RootStore>({
+export const store: Store<IRootStore> = new Vuex.Store<IRootStore>({
     state: {
         version: "1.0"
     },
@@ -17,6 +18,7 @@ export const store: Store<RootStore> = new Vuex.Store<RootStore>({
         user,
         category,
         search,
-        navbar
+        navbar,
+        landingPageProducts
     },
 })

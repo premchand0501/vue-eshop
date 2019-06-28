@@ -3,15 +3,17 @@
     <span
       class="iconBase"
       @click="toggleMenu(item.name)"
-      v-bind:style="{backgroundColor: item.color}"
-      v-bind:class="{'scaleYAnim': currentItemMenuVisible === item.name}"
+      :style="{backgroundColor: item.color}"
+      :class="{'scaleYAnim': currentItemMenuVisible === item.name}"
     >
       <img
-        v-bind:alt="item.title"
+        :alt="item.title"
         v-if="item.iconType == 'image'"
-        v-bind:src="require(`../../assets/img/icons/${item.icon}`)"
+        :src="require(`../../assets/img/icons/${item.icon}`)"
       >
-      <i class="icon" v-bind:class="[`ion-md-${item.icon}`]" v-else></i>
+      <i class="icon" 
+        :class="[`ion-${item.icon}`]"
+        v-else></i>
     </span>
     <span @click="toggleMenu(item.name)">
       {{item.title}}
@@ -26,9 +28,9 @@
           class="dropdown-item"
           @click.stop
           v-for="(it, ind) in item.items"
-          v-bind:key="`item_${ind}`"
-          v-bind:data-index="ind"
-          v-bind:style="{transitionDelay: `${ind/5}s`}"
+          :key="`item_${ind}`"
+          :data-index="ind"
+          :style="{transitionDelay: `${ind/5}s`}"
         >
           <span>{{it}}</span>
           <button class="btn btn-link">
@@ -42,10 +44,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { ShoppingCategory } from "../../interface/ShoppingCategory";
+import { IShoppingCategory } from "@/interface/ICategory";
 @Component
 export default class ListItem extends Vue {
-  @Prop() item!: ShoppingCategory;
+  @Prop() item!: IShoppingCategory;
   currentItemMenuVisible: string = "";
   toggleMenu(menuName: string) {
     if (this.currentItemMenuVisible === "")
@@ -82,6 +84,8 @@ export default class ListItem extends Vue {
     max-height: 2.5rem;
     background-color: white;
     border-radius: 1.25rem;
+    mix-blend-mode: darken;
+    text-align: center;
     img {
       width: 2.5rem;
       height: 2.5rem;

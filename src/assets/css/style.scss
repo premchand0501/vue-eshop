@@ -28,19 +28,17 @@ body{
 .input-control{
     border-radius: 2px;
 }
-@media screen and (min-width: 850px){
-    *::-webkit-scrollbar {
-        width: .25em;
-    }
-    
-    *::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
-    }
-    
-    *::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-    }
+*::-webkit-scrollbar {
+    width: .25em;
+}
+
+*::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+}
+
+*::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
 }
 .text-decoration-line-through{
     text-decoration: line-through;

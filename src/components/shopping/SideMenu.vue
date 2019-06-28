@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import List from "@/components/shopping/List.vue";
-import { ShoppingCategory } from "@/interface/ShoppingCategory";
+import { IShoppingCategory } from "@/interface/ICategory";
 import { mapGetters } from 'vuex';
 
 @Component({
@@ -16,31 +16,12 @@ import { mapGetters } from 'vuex';
   computed: mapGetters(['shoppingList'])
 })
 export default class SideMenu extends Vue {
-  shoppingList!: ShoppingCategory[];
-
-  created() {
-    this.getCategories();
+  shoppingList!: IShoppingCategory[];
+  created(){
+    this.$store.dispatch('loadCategory');
   }
   hideMenu() {
     this.$store.dispatch('toggleNavbar', false);
-  }
-  async getCategories() {
-    const res = await fetch("http://localhost:4000/categories", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Type': 'application/json'
-      },
-      body: JSON.stringify( { query: '{categories}'})
-    });
-    const jsonData = await res.json();
-    if (jsonData.hasOwnProperty("category_list")) {
-      const categories: ShoppingCategory[] = jsonData[
-        "category_list"
-      ] as ShoppingCategory[];
-      this.$store.dispatch("loadCategory", categories);
-      console.log(this.shoppingList);
-    }
   }
 }
 </script>
@@ -69,7 +50,7 @@ export default class SideMenu extends Vue {
     width: 100%;
     height: 100%;
     background-color: darken($light-dark, 5%);
-    overflow-y: hidden;
+    overflow-y: auto;
   }
 }
 </style>

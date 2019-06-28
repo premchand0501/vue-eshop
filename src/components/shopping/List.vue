@@ -13,12 +13,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ListItem from "./ListItem.vue";
-import { ShoppingCategory } from '../../interface/ShoppingCategory';
+import { IShoppingCategory } from '@/interface/ICategory';
 @Component({
     components:{ ListItem }
 })
 export default class List extends Vue {
-    @Prop() listData!: ShoppingCategory[];
+    @Prop() listData!: IShoppingCategory[];
 
 }
 </script>

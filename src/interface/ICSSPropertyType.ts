@@ -1,4 +1,4 @@
-export interface CSSPropertyType {
+export interface ICSSPropertyType {
     propName: string;
     propValue: string;
 }
