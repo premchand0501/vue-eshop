@@ -9,7 +9,9 @@
 import { Vue, Component } from "vue-property-decorator";
 
 @Component
-export default class Admin extends Vue {}
+export default class Admin extends Vue {
+  
+}
 </script>
 <style lang="scss" scoped>
 .container {

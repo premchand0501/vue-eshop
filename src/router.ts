@@ -30,6 +30,7 @@ export default new Router({
           });
         }
       },
+      component: ()=>import(/* webpackChunkName: "Admin" */ './views/admin/Admin.vue'),
       children: [
         {
           path: 'create-category',
