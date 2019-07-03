@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid fixed-top bg-color create">
+  <div class="container-fluid bg-color create p-0 fixed-top">
     <div class="container">
       <div class="row">
         <div class="col col-12">
@@ -87,13 +87,14 @@ export default class CreateCategory extends Vue {
         this.categoryData.iconType === "image"
           ? this.categoryData.icon + ".svg"
           : this.categoryData.icon,
-      items: listItem.map(i => i.trim())
+      items: listItem.map(i => i.trim()),
+      groupId: ''
     };
     this.$store.dispatch("addCategory", category);
     this.goBack();
   }
   goBack() {
-    this.$router.replace("/");
+    this.$router.replace({path: '/admin'});
   }
 }
 </script>

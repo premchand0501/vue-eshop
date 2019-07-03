@@ -10,10 +10,8 @@
         :alt="item.title"
         v-if="item.iconType == 'image'"
         :src="require(`../../assets/img/icons/${item.icon}`)"
-      >
-      <i class="icon" 
-        :class="[`ion-${item.icon}`]"
-        v-else></i>
+      />
+      <i class="icon" :class="[`ion-${item.icon}`]" v-else></i>
     </span>
     <span @click="toggleMenu(item.name)">
       {{item.title}}
@@ -23,7 +21,6 @@
         name="scale-fade"
         v-if="item.items && currentItemMenuVisible === item.name"
       >
-        <!-- <transition-group name="scale-fade"> -->
         <li
           class="dropdown-item"
           @click.stop
@@ -37,7 +34,6 @@
             <i class="icon ion-md-arrow-forward"></i>
           </button>
         </li>
-        <!-- </transition-group> -->
       </transition-group>
     </span>
   </li>

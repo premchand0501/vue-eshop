@@ -7,14 +7,13 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
       component: ()=>import(/* webpackChunkName: "Shopping" */ './views/Shopping/Shopping.vue'),
-      children: [
-        {
-          path: 'product-list',
-          name: 'product-list',
-          component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
-        }
-      ]
+    },
+    {
+      path: '/product-list/:group_id',
+      name: 'product-list',
+      component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
     },
     {
       path: '/admin',
@@ -36,6 +35,11 @@ export default new Router({
           path: 'create-category',
           name: 'CreateCategory',
           component: ()=>import(/* webpackChunkName: "CreateCategory" */ './views/admin/CreateCategory.vue')
+        },
+        {
+          path: 'product',
+          name: 'ProductAddEdit',
+          component: ()=>import(/* webpackChunkName: "ProductAddEdit" */ './views/admin/ProductAddEdit.vue')
         }
       ]
     },

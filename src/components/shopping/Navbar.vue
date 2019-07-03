@@ -3,7 +3,7 @@
     <button class="navbar-toggler" type="button" @click="showSideMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#"><em>eShop</em></a>
+    <router-link to="/" class="navbar-brand"><em>eShop</em></router-link>
     <div class="btn-group">
       <button class="navbar-toggler" type="button" @click="addNewCategory">
         <i class="icon ion-md-add"></i>

@@ -2,7 +2,7 @@ import { Module, ActionContext } from 'vuex';
 import { IProductGroup, IProduct, IProductList } from '@/interface/IProduct';
 import { IRootStore } from '@/interface/IRootStore';
 
-import { firebaseStorage } from '@/main';
+import { firebaseDatabase } from '@/main';
 
 export const landingPageProducts: Module<IProductList, IRootStore> = {
     state: {
@@ -16,7 +16,7 @@ export const landingPageProducts: Module<IProductList, IRootStore> = {
     mutations: {
         loadProducts(state: IProductList){
             console.log("loadProducts");
-            firebaseStorage.ref('landing-page-products').on('value', (snapshot)=>{
+            firebaseDatabase.ref('landing-page-products').on('value', (snapshot)=>{
                 state.group = snapshot.val();
                 console.log(state.group);
             })
@@ -24,7 +24,7 @@ export const landingPageProducts: Module<IProductList, IRootStore> = {
         addProductToGroup(state: IProductList, item: IProduct){
             state.group.forEach((grp: IProductGroup)=>{
                 if(grp.id == item.groupId){
-                    firebaseStorage.ref(`landing-page-products/${grp.id}/${grp.products.length}`).set(item);
+                    firebaseDatabase.ref(`landing-page-products/${grp.id}/${grp.products.length}`).set(item);
                 }
             })
         }

@@ -1,14 +1,15 @@
 <template>
-  <div class="container-fluid productGroup">
+  <div class="container-fluid productGroup" v-if="productProp">
     <div class="row border-bottom mb-3">
       <div class="container">
         <div class="row">
           <div class="col-12 productGroupHeader">
             <div class="groupTitle">
               <img
-                src="https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100"
+                :src="productProp.icon"
                 alt="product"
                 class="img-fluid"
+                v-if="productProp.icon != ''"
               >
               <div>
                 <h5>{{productProp.title}}</h5>
@@ -77,40 +78,3 @@ export default class ProductGroup extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
-@import "@/assets/css/_variables.scss";
-.productGroup {
-  background-color: $light;
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 4px transparentize($color: $dark, $amount: 0.8);
-  .productDetails {
-    p {
-      font-size: 0.75rem;
-      margin-bottom: 0.5rem;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  }
-  .productGroupHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 5rem;
-    .groupTitle {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-    h5,
-    p {
-      margin-bottom: 0;
-    }
-    img {
-      max-width: 3rem;
-      margin-right: 0.5rem;
-    }
-  }
-}
-</style>

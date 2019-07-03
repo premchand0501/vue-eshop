@@ -43,3 +43,38 @@ outline: 1px solid slategrey;
 .text-decoration-line-through{
     text-decoration: line-through;
 }
+
+.productGroup {
+  background-color: $light;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 4px transparentize($color: $dark, $amount: 0.8);
+  .productDetails {
+    p {
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  .productGroupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    .groupTitle {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    h5,
+    p {
+      margin-bottom: 0;
+    }
+    img {
+      max-width: 3rem;
+      margin-right: 0.5rem;
+    }
+  }
+}

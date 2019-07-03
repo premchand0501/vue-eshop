@@ -6,4 +6,5 @@ export interface IShoppingCategory{
     icon: string;
     color: string;
     items: string[];
+    groupId: number;
 }

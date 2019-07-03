@@ -10,6 +10,7 @@ export interface IProduct{
     groupId: number;
 }
 export interface IProductGroup{
+    icon: string;
     id: number;
     title: String;
     description: String;

@@ -1,6 +1,6 @@
 [
     {
-        "id": "1",
+        "groupId": 0,
         "color": "deeppink",
         "icon": "bread.svg",
         "iconType": "image",
@@ -12,7 +12,7 @@
         "title": "Bread and Pestries"
     },
     {
-        "id": "2",
+        "groupId": 1,
         "color": "yellow",
         "icon": "clown-fish.svg",
         "iconType": "image",
@@ -24,7 +24,7 @@
         "title": "Fish"
     },
     {
-        "id": "3",
+        "groupId": 2,
         "color": "yellow",
         "icon": "steak.svg",
         "iconType": "image",
@@ -36,7 +36,7 @@
         "title": "Meat"
     },
     {
-        "id": "4",
+        "groupId": 3,
         "color": "deepskyblue",
         "icon": "milk.svg",
         "iconType": "image",
@@ -48,7 +48,7 @@
         "title": "Dairy Products"
     },
     {
-        "id": "5",
+        "groupId": 4,
         "color": "blueviolet",
         "icon": "cherries.svg",
         "iconType": "image",
@@ -60,7 +60,7 @@
         "title": "Fruits"
     },
     {
-        "id": "6",
+        "groupId": 5,
         "color": "mediumseagreen",
         "icon": "aubergine.svg",
         "iconType": "image",

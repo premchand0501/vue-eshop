@@ -1,6 +1,16 @@
-import { IProfileData } from './IProfileData';
-
 export interface ILoginData{
-    loginStatus: boolean,
-    profileData: IProfileData|undefined;
+    loginStatus: boolean;
+    profileData: IUserData|Object;
+    errors: string[];
+}
+
+export interface IUserData{
+    name: string;
+    email: string;
+    refreshToken: string;
+}
+
+export interface ILoginCredentials{
+    email: string;
+    password: string;
 }
