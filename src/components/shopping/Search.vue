@@ -44,30 +44,30 @@
   </transition>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import { mapGetters } from "vuex";
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
 @Component({
-  computed: mapGetters(["searchKeywords", "searchToggle"])
+  computed: mapGetters(['searchKeywords', 'searchToggle']),
 })
 export default class Search extends Vue {
-  searchInput: string = "";
+  public searchInput: string = '';
 
-  searchToggle!: boolean;
+  public searchToggle!: boolean;
 
-  searchKeywords!: string[];
+  public searchKeywords!: string[];
 
-  showContent: boolean = false;
+  public showContent: boolean = false;
 
-  closeSearch(){
+  public closeSearch() {
     this.showContent = false;
-    setTimeout(()=>{
-      this.$store.dispatch("toggleSearch", false);
+    setTimeout(() => {
+      this.$store.dispatch('toggleSearch', false);
     }, 250);
   }
-  searchRequest(event: Event) {
+  public searchRequest(event: Event) {
     event.stopPropagation();
-    console.log("submit");
-    this.$store.dispatch("addSearchKeyword", this.searchInput);
+    console.log('submit');
+    this.$store.dispatch('addSearchKeyword', this.searchInput);
   }
 }
 </script>

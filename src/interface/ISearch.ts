@@ -1,3 +1,3 @@
-export interface ISearch{
+export interface ISearch {
     searchKeywords: string[];
 }

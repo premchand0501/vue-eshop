@@ -3,10 +3,10 @@ import App from './App.vue';
 import router from './router';
 import {store} from './stores';
 
-import firebase from "firebase/app";
-import "firebase/database";
-import "firebase/storage";
-import "firebase/auth";
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/storage';
+import 'firebase/auth';
 
 export const globalEventBus = new Vue();
 
@@ -25,7 +25,7 @@ const firebaseConfig = {
   projectId: process.env.VUE_APP_PROJECTID,
   storageBucket: process.env.VUE_APP_STORAGEBUCKET,
   messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
-  appId: process.env.VUE_APP_APPID
+  appId: process.env.VUE_APP_APPID,
 };
 const eshop = firebase.initializeApp(firebaseConfig);
 export const firebaseDatabase = eshop.database();

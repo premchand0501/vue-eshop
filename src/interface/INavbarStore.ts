@@ -1,4 +1,4 @@
-export interface INavbarStore{
+export interface INavbarStore {
     navbarToggle: boolean;
     searchToggle: boolean;
 }

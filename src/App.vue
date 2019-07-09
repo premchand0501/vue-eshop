@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fall-in">
-        <router-view/>
+      <router-view />
     </transition>
     <div class="loading" v-show="loading">
       <p>{{loadingText}}</p>
@@ -9,15 +9,15 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { globalEventBus } from './main';
+import { Vue, Component } from "vue-property-decorator";
+import { globalEventBus } from "./main";
 
 @Component
-export default class App extends Vue{
-  loading: boolean = false;
-  loadingText: string = "";
-  created(){
-    globalEventBus.$on('loading', (flag: boolean, text: string)=>{
+export default class App extends Vue {
+  public loading: boolean = false;
+  public loadingText: string = "";
+  public created() {
+    globalEventBus.$on("loading", (flag: boolean, text: string) => {
       this.loading = flag;
       this.loadingText = text;
     });
@@ -30,8 +30,8 @@ export default class App extends Vue{
 </script>
 
 <style lang="scss">
-@import './assets/css/style.scss';
-.loading{
+@import "./assets/css/style.scss";
+.loading {
   position: fixed;
   z-index: 1100;
   left: 0;

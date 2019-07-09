@@ -21,24 +21,28 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import Swiper, { SelectableElement, SwiperOptions, NavigationOptions } from "swiper";
+import Swiper, {
+  SelectableElement,
+  SwiperOptions,
+  NavigationOptions
+} from "swiper";
 
 @Component
 export default class SwiperWrapper extends Vue {
-  mySwiper!: Swiper;
-  mySwiperNextBtn!: HTMLElement;
-  mySwiperPrevBtn!: HTMLElement;
-  mySwiperPagination!: HTMLElement;
-  swiperOptions!: SwiperOptions;
-  created(){
-    window.addEventListener('resize', this.updateSwiper);
+  public mySwiper!: Swiper;
+  public mySwiperNextBtn!: HTMLElement;
+  public mySwiperPrevBtn!: HTMLElement;
+  public mySwiperPagination!: HTMLElement;
+  public swiperOptions!: SwiperOptions;
+  public created() {
+    window.addEventListener("resize", this.updateSwiper);
   }
-  updateSwiper(){
+  public updateSwiper() {
     this.mySwiper.update();
     this.mySwiper.detachEvents();
     this.mySwiper.attachEvents();
   }
-  mounted() {
+  public mounted() {
     this.swiperOptions = {
       autoplay: true,
       spaceBetween: 20,
@@ -56,13 +60,13 @@ export default class SwiperWrapper extends Vue {
       this.swiperOptions
     );
   }
-  destroyed(){
-    window.removeEventListener('resize', this.updateSwiper);
+  public destroyed() {
+    window.removeEventListener("resize", this.updateSwiper);
   }
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/_variables.scss';
+@import "@/assets/css/_variables.scss";
 @import url("~swiper/dist/css/swiper.min.css");
 
 .swiper-container {

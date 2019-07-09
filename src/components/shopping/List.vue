@@ -11,14 +11,14 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import ListItem from "./ListItem.vue";
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import ListItem from './ListItem.vue';
 import { IShoppingCategory } from '@/interface/ICategory';
 @Component({
-    components:{ ListItem }
+    components: { ListItem },
 })
 export default class List extends Vue {
-    @Prop() listData!: IShoppingCategory[];
+    @Prop() public listData!: IShoppingCategory[];
 
 }
 </script>

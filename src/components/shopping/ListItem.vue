@@ -6,11 +6,7 @@
       :style="{backgroundColor: item.color}"
       :class="{'scaleYAnim': currentItemMenuVisible === item.name}"
     >
-      <img
-        :alt="item.title"
-        v-if="item.iconType == 'image'"
-        :src="require(`../../assets/img/icons/${item.icon}`)"
-      />
+      <img :alt="item.title" v-if="item.iconType == 'image'" :src="item.icon" />
       <i class="icon" :class="[`ion-${item.icon}`]" v-else></i>
     </span>
     <span @click="toggleMenu(item.name)">
@@ -43,14 +39,16 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { IShoppingCategory } from "@/interface/ICategory";
 @Component
 export default class ListItem extends Vue {
-  @Prop() item!: IShoppingCategory;
-  currentItemMenuVisible: string = "";
-  toggleMenu(menuName: string) {
-    if (this.currentItemMenuVisible === "")
+  @Prop() public item!: IShoppingCategory;
+  public currentItemMenuVisible: string = "";
+  public toggleMenu(menuName: string) {
+    if (this.currentItemMenuVisible === "") {
       this.currentItemMenuVisible = menuName;
-    else this.currentItemMenuVisible = "";
+    } else {
+      this.currentItemMenuVisible = "";
+    }
   }
-  addItem(event: Event) {
+  public addItem(event: Event) {
     event.stopPropagation();
   }
 }

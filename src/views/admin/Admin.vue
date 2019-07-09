@@ -15,7 +15,7 @@
         >Add New Product</router-link>
       </ul>
     </div>
-    <transition name="fall-in">
+    <transition name="pull">
       <router-view></router-view>
     </transition>
   </div>

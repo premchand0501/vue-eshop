@@ -1,16 +1,16 @@
-export interface ILoginData{
+export interface ILoginData {
     loginStatus: boolean;
     profileData: IUserData|Object;
     errors: string[];
 }
 
-export interface IUserData{
+export interface IUserData {
     name: string;
     email: string;
     refreshToken: string;
 }
 
-export interface ILoginCredentials{
+export interface ILoginCredentials {
     email: string;
     password: string;
 }

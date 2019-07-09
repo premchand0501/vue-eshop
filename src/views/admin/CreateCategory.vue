@@ -12,7 +12,7 @@
                 class="form-control"
                 v-model="categoryData.title"
                 required
-              >
+              />
             </div>
             <div class="form-group">
               <input
@@ -21,7 +21,7 @@
                 class="form-control"
                 v-model="categoryData.icon"
                 required
-              >
+              />
             </div>
             <div class="form-group">
               <input
@@ -30,7 +30,7 @@
                 class="form-control"
                 v-model="categoryData.color"
                 required
-              >
+              />
             </div>
             <div class="form-group">
               <select class="form-control w-100" v-model="categoryData.iconType">
@@ -45,7 +45,7 @@
                 class="form-control"
                 v-model="categoryData.items"
                 required
-              >
+              />
               <p>
                 <small>Seperate multiple sub categories with comma.</small>
               </p>
@@ -60,21 +60,23 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { IShoppingCategory } from "@/interface/ICategory";
+import { IShoppingCategory, ICategory } from "@/interface/ICategory";
+import { mapGetters } from "vuex";
 
-@Component
+@Component({
+  computed: mapGetters(["shoppingList"])
+})
 export default class CreateCategory extends Vue {
-  categoryData = {
+  public categoryData = {
     title: "Facebook",
     icon: "logo-facebook",
     color: "red",
     iconType: "icon",
     items: "news, status"
   };
-  created(){
-      console.log("create category");
-  }
-  addNewCategory() {
+  public shoppingList!: ICategory;
+
+  public addNewCategory() {
     Object.values(this.categoryData).forEach(item => {
       if (item == "") {
         return;
@@ -88,13 +90,13 @@ export default class CreateCategory extends Vue {
           ? this.categoryData.icon + ".svg"
           : this.categoryData.icon,
       items: listItem.map(i => i.trim()),
-      groupId: ''
+      groupId: 0
     };
     this.$store.dispatch("addCategory", category);
     this.goBack();
   }
-  goBack() {
-    this.$router.replace({path: '/admin'});
+  public goBack() {
+    this.$router.replace({ path: "/admin" });
   }
 }
 </script>

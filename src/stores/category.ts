@@ -6,22 +6,22 @@ import { firebaseDatabase } from '@/main';
 
 export const category: Module<ICategory, IRootStore> = {
     state: {
-        shoppingList: []
+        categoryList: [],
     },
     getters: {
         shoppingList(state: ICategory) {
-            return state.shoppingList
-        }
+            return state.categoryList;
+        },
     },
     mutations: {
         loadCategory(state: ICategory) {
-            firebaseDatabase.ref('categories').on('value', (snapshot) => {
-                state.shoppingList = snapshot.val();
-            })
+            firebaseDatabase.ref('categories').once('value', (snapshot) => {
+                state.categoryList = snapshot.val();
+            });
         },
         addCategory(state: ICategory, item: IShoppingCategory) {
-            firebaseDatabase.ref('categories/' + state.shoppingList.length).set({ ...item, groupId: state.shoppingList.length });
-        }
+            firebaseDatabase.ref('categories/' + state.categoryList.length).set({ ...item, groupId: state.categoryList.length });
+        },
     },
     actions: {
         loadCategory(context: ActionContext<ICategory, IRootStore>) {
@@ -29,6 +29,6 @@ export const category: Module<ICategory, IRootStore> = {
         },
         addCategory(context: ActionContext<ICategory, IRootStore>, category: IShoppingCategory) {
             context.commit('addCategory', category);
-        }
-    }
-}
+        },
+    },
+};

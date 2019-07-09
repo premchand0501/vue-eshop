@@ -6,21 +6,21 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import List from "@/components/shopping/List.vue";
-import { IShoppingCategory } from "@/interface/ICategory";
+import { Vue, Component } from 'vue-property-decorator';
+import List from '@/components/shopping/List.vue';
+import { IShoppingCategory } from '@/interface/ICategory';
 import { mapGetters } from 'vuex';
 
 @Component({
   components: { List },
-  computed: mapGetters(['shoppingList'])
+  computed: mapGetters(['shoppingList']),
 })
 export default class SideMenu extends Vue {
-  shoppingList!: IShoppingCategory[];
-  created(){
+  public shoppingList!: IShoppingCategory[];
+  public created() {
     this.$store.dispatch('loadCategory');
   }
-  hideMenu() {
+  public hideMenu() {
     this.$store.dispatch('toggleNavbar', false);
   }
 }

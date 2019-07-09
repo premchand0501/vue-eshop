@@ -19,25 +19,25 @@
   </nav>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import Search from "./Search.vue";
-import SideMenu from "@/components/shopping/SideMenu.vue";
-import { mapGetters } from "vuex";
+import { Vue, Component } from 'vue-property-decorator';
+import Search from './Search.vue';
+import SideMenu from '@/components/shopping/SideMenu.vue';
+import { mapGetters } from 'vuex';
 
 @Component({
   components: { Search, SideMenu },
-  computed: mapGetters(['navbarToggle', 'searchToggle'])
+  computed: mapGetters(['navbarToggle', 'searchToggle']),
 })
 export default class Navbar extends Vue {
-  searchToggle!: boolean;
-  navbarToggle!: boolean;
-  enableSearch(){
+  public searchToggle!: boolean;
+  public navbarToggle!: boolean;
+  public enableSearch() {
     this.$store.dispatch('toggleSearch', true);
   }
-  addNewCategory() {
-    this.$router.push(this.$route.path + "/create-category");
+  public addNewCategory() {
+    this.$router.push(this.$route.path + '/create-category');
   }
-  showSideMenu(){
+  public showSideMenu() {
     this.$store.dispatch('toggleNavbar', true);
   }
 }

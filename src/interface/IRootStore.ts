@@ -1,3 +1,3 @@
-export interface IRootStore{
+export interface IRootStore {
     version: string;
 }

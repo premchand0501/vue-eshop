@@ -1,4 +1,4 @@
-export interface IProduct{
+export interface IProduct {
     name: String;
     description: String;
     image: String;
@@ -8,14 +8,16 @@ export interface IProduct{
     category: string;
     brand: string;
     groupId: number;
+    showOnLandingPage: boolean;
+    productId: number
 }
-export interface IProductGroup{
-    icon: string;
-    id: number;
-    title: String;
-    description: String;
-    products: IProduct[];
+export interface IProductList {
+    group: IProduct[];
 }
-export interface IProductList{
-    group: IProductGroup[];
+export interface IProductDetails {
+    detail: IProduct | undefined;
+}
+export interface Query {
+    key: string;
+    value: any;
 }

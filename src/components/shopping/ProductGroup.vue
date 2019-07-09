@@ -1,24 +1,24 @@
 <template>
   <div class="container-fluid productGroup" v-if="productProp">
-    <div class="row border-bottom mb-3">
+    <div class="row border-bottom mb-3" v-if="productProp[0]">
       <div class="container">
         <div class="row">
           <div class="col-12 productGroupHeader">
             <div class="groupTitle">
               <img
-                :src="productProp.icon"
+                :src="productProp[0].image"
                 alt="product"
                 class="img-fluid"
-                v-if="productProp.icon != ''"
-              >
+                v-if="productProp[0].image != ''"
+              />
               <div>
-                <h5>{{productProp.title}}</h5>
-                <p>
-                  <small>{{productProp.description}}</small>
-                </p>
+                <h5>{{productProp[0].brand}}</h5>
               </div>
             </div>
-            <button class="btn btn-primary" @click="addNewProduct">View All</button>
+            <router-link
+              :to="`/product-list/${productProp[0].groupId}`"
+              class="btn btn-primary"
+            >View All</router-link>
           </div>
         </div>
       </div>
@@ -26,26 +26,24 @@
     <div class="row">
       <div class="container">
         <div class="row">
-          <div class="col col-6 col-md-3 col-sm-4 mb-3" 
-            v-for="(prod, index) in productProp.products"
-            :key="`product_${index}`">
-            <div class="productWrapp">
+          <div
+            class="col col-6 col-md-3 col-sm-4 mb-3"
+            v-for="(prod, index) in productProp"
+            :key="`product_${index}`"
+          >
+            <router-link class="productWrapp" :to="`/product-details/${prod.productId}`">
               <div class="productImage">
-                <img
-                  :src="prod.image"
-                  :alt="prod.title"
-                  class="img-fluid"
-                >
+                <img :src="prod.image" :alt="prod.name" class="img-fluid" />
               </div>
               <div class="productDetails text-center">
-                <p>{{ prod.title }}</p>
+                <p>{{ prod.name }}</p>
                 <p>
                   <span>₹{{ prod.discountedPrice }}</span>&nbsp;
                   <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
                   <span class="text-success">{{ prod.discount }}% off</span>
                 </p>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -54,27 +52,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { IProductGroup, IProduct } from '../../interface/IProduct';
+import { IProduct } from "../../interface/IProduct";
 
 @Component
 export default class ProductGroup extends Vue {
-  @Prop() productProp!: IProductGroup;
-  mounted(){
-    console.log(this.productProp);
-  }
-  addNewProduct(){
-    const newProd: IProduct = {
-        "name": "Ducati DAYPACK 24 L Laptop Backpack",
-        "description": "",
-        "image": "https://rukminim1.flixcart.com/image/633/633/jv5k2a80/backpack/g/s/d/daypack-dtw17bk-016c-laptop-backpack-ducati-original-imafg4gtksgekeeg.jpeg?q=100",
-        "discount": 79,
-        "price": 2799,
-        "discountedPrice": 560,
-        "category": "Laptop Backpack",
-        "brand": "Ducati",
-        "groupId": this.productProp.id
-    }
-    this.$store.dispatch("addProductToGroup", newProd);
+  @Prop() public productProp!: IProduct;
+  created() {
+    console.log(JSON.stringify(this.productProp));
   }
 }
 </script>

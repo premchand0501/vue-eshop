@@ -8,7 +8,7 @@ export const user: Module<ILoginData, IRootStore> = {
     state: {
         loginStatus: false,
         profileData: {},
-        errors: []
+        errors: [],
     },
     getters: {
         loginStatus(state: ILoginData) {
@@ -19,28 +19,28 @@ export const user: Module<ILoginData, IRootStore> = {
         },
         getErrors(state: ILoginData) {
             return state.errors;
-        }
+        },
     },
     mutations: {
         async loginUser(state: ILoginData, userData: ILoginCredentials) {
             firebaseAuth
                 .signInWithEmailAndPassword(userData.email, userData.password)
-                .then(res => {
+                .then((res) => {
                     if (res.user != null) {
                         const firebaseData: IUserData = {
                             name: res.user.displayName!,
                             email: res.user.email!,
-                            refreshToken: res.user.refreshToken
-                        }
+                            refreshToken: res.user.refreshToken,
+                        };
                         state.profileData = {...firebaseData};
                     }
                 })
-                .catch(err => console.log(err));
-        }
+                .catch((err) => console.log(err));
+        },
     },
     actions: {
         loginUser(context: ActionContext<ILoginData, IRootStore>, userData: ILoginCredentials) {
             context.commit('loginUser', userData);
-        }
-    }
-}
+        },
+    },
+};

@@ -8,61 +8,64 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: ()=>import(/* webpackChunkName: "Shopping" */ './views/Shopping/Shopping.vue'),
+      component: () => import(/* webpackChunkName: "Shopping" */ './views/Shopping/Shopping.vue'),
     },
     {
       path: '/product-list/:group_id',
       name: 'product-list',
-      component: ()=>import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue')
+      component: () => import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue'),
+    },
+    {
+      path: '/product-details/:prod_id',
+      name: 'product-details',
+      component: () => import(/* webpackChunkName: "ProductDetails" */ './views/Shopping/ProductDetails.vue'),
     },
     {
       path: '/admin',
-      beforeEnter: (to, from, next)=>{
-        const token = localStorage.getItem("token");
-        if(token != null && token != "") {
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+        if (token != null && token != '') {
           next();
-        }
-        else {
+        } else {
           next({
             name: 'Auth',
-            params: { redirectUrl: from.fullPath}
+            params: { redirectUrl: from.fullPath },
           });
         }
       },
-      component: ()=>import(/* webpackChunkName: "Admin" */ './views/admin/Admin.vue'),
+      component: () => import(/* webpackChunkName: "Admin" */ './views/admin/Admin.vue'),
       children: [
         {
           path: 'create-category',
           name: 'CreateCategory',
-          component: ()=>import(/* webpackChunkName: "CreateCategory" */ './views/admin/CreateCategory.vue')
+          component: () => import(/* webpackChunkName: "CreateCategory" */ './views/admin/CreateCategory.vue'),
         },
         {
           path: 'product',
           name: 'ProductAddEdit',
-          component: ()=>import(/* webpackChunkName: "ProductAddEdit" */ './views/admin/ProductAddEdit.vue')
-        }
-      ]
+          component: () => import(/* webpackChunkName: "ProductAddEdit" */ './views/admin/ProductAddEdit.vue'),
+        },
+      ],
     },
     {
       path: '/auth',
       name: 'Auth',
-      beforeEnter: (to, from, next)=>{
-        const token = localStorage.getItem("token");
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
         console.log(token);
-        if(token != null && token != "") {
+        if (token != null && token != '') {
           next({
-            name: 'CreateCategory'
+            name: 'CreateCategory',
           });
-        }
-        else {
+        } else {
           next();
         }
       },
-      component: ()=>import(/* webpackChunkName: "Auth" */ './views/admin/Auth.vue'),
+      component: () => import(/* webpackChunkName: "Auth" */ './views/admin/Auth.vue'),
     },
     {
       path: '**',
-      component: ()=>import(/* webpackChunkName: "404" */ './views/404.vue')
-    }
+      component: () => import(/* webpackChunkName: "404" */ './views/404.vue'),
+    },
   ],
 });

@@ -27,39 +27,39 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 import { ILoginCredentials, IUserData } from '../../interface/ILoginData';
 import { mapGetters } from 'vuex';
 import { firebaseAuth } from '../../main';
 
 @Component({
-  computed: mapGetters(['errors', 'profileData'])
+  computed: mapGetters(['errors', 'profileData']),
 })
 export default class Auth extends Vue {
-  profileData!: IUserData;
-  userCredentials: ILoginCredentials = {
+  public profileData!: IUserData;
+  public userCredentials: ILoginCredentials = {
     email: 'prem@gmail.com',
-    password: 'Prem0501'
+    password: 'Prem0501',
   };
-  errorMsg = {
+  public errorMsg = {
     email: {
       msg: 'Please enter valid email',
       valid: false,
-      dirty: false
+      dirty: false,
     },
     password: {
       msg: 'Please enter valid password',
       valid: false,
-      dirty: false
-    }
-  }
-  loginUser(){
+      dirty: false,
+    },
+  };
+  public loginUser() {
     this.validateForm('');
-    const validForms = Object.values(this.errorMsg).filter(value=>value.valid && value.dirty);
-    if(validForms.length == Object.keys(this.errorMsg).length){
+    const validForms = Object.values(this.errorMsg).filter((value) => value.valid && value.dirty);
+    if (validForms.length == Object.keys(this.errorMsg).length) {
       this.$store.dispatch('loginUser', this.userCredentials)
-      .then(()=>{
-        if(this.profileData.hasOwnProperty('refreshToken')){
+      .then(() => {
+        if (this.profileData.hasOwnProperty('refreshToken')) {
           localStorage.setItem('token', this.profileData.refreshToken);
           this.$router.push('/admin');
         }
@@ -67,20 +67,18 @@ export default class Auth extends Vue {
     }
   }
 
-  validateForm(formField: String){
-    if((formField =='' || formField == 'email') && !/^[a-z]([a-z0-9.-]+)[@][a-z]{2,}[.][a-z]{2,}$/i.test(this.userCredentials.email)){
+  public validateForm(formField: String) {
+    if ((formField == '' || formField == 'email') && !/^[a-z]([a-z0-9.-]+)[@][a-z]{2,}[.][a-z]{2,}$/i.test(this.userCredentials.email)) {
       this.errorMsg.email.valid = false;
       this.errorMsg.email.dirty = true;
-    }
-    else{
+    } else {
       this.errorMsg.email.valid = true;
       this.errorMsg.email.dirty = true;
     }
-    if((formField =='' || formField == 'password') && this.userCredentials.password.length<6){
+    if ((formField == '' || formField == 'password') && this.userCredentials.password.length < 6) {
       this.errorMsg.password.valid = false;
       this.errorMsg.password.dirty = true;
-    }
-    else{
+    } else {
       this.errorMsg.password.valid = true;
       this.errorMsg.password.dirty = true;
     }
