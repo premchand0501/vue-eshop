@@ -14,17 +14,11 @@ export const productDetails: Module<IProductDetails, IRootStore> = {
     },
   },
   mutations: {
-    getProductDetails(state: IProductDetails, query: Query) {
-      console.log(query);
-      if (query !== undefined) {
-        firebaseDatabase.ref('products')
-          .orderByChild(query.key)
-          .equalTo(query.value, query.key)
-          .once('value', (snapshot) => {
-            state.detail = snapshot.val();
-            console.log('details', JSON.stringify(state.detail));
-          });
-      }
+    getProductDetails(state: IProductDetails, productId: number) {
+      firebaseDatabase.ref('products/' + productId).on('value', (snapshot) => {
+        state.detail = snapshot.val();
+        console.log('details', JSON.stringify(state.detail));
+      });
     }
   },
   actions: {

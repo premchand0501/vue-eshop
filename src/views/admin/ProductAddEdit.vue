@@ -103,7 +103,7 @@
               <label for="showOnLandingPage" class="d-block m-0">Show on Landing Page</label>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
-            <button type="submit" class="btn btn-outline-dark ml-3" @click="goBack">Cancel</button>
+            <button class="btn btn-outline-dark ml-3" @click="goBack">Cancel</button>
             <p
               :class="{'text-success': success.flag, 'text-danger': !success.flag}"
               v-if="success.flag > -1"
@@ -126,12 +126,12 @@ import { IProduct, IProductList } from "../../interface/IProduct";
 })
 export default class CreateCategory extends Vue {
   allProducts!: IProduct[];
-  public success = {
+  success = {
     flag: -1,
     msg: ""
   };
-  public shoppingList!: IShoppingCategory[];
-  public productData: IProduct = {
+  shoppingList!: IShoppingCategory[];
+  productData: IProduct = {
     name: "Ducati DAYPACK 24 L Laptop Backpack",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem animi deleniti, aperiam cupiditate porro in aliquam? Maiores ipsum aliquid libero, dolore similique repellendus nemo id qui voluptatum deserunt ratione odit!",
@@ -145,13 +145,13 @@ export default class CreateCategory extends Vue {
     showOnLandingPage: false,
     productId: 0
   };
-  public fileName: string = "";
+  fileName: string = "";
 
-  public created() {
+  created() {
     this.$store.dispatch("loadCategory");
     this.$store.dispatch("loadAllProducts");
   }
-  public uploadProdImage(event: Event) {
+  uploadProdImage(event: Event) {
     const formEl: HTMLInputElement = event.target as HTMLInputElement;
     console.log(formEl.files);
     if (formEl.files!.length > 0) {
@@ -170,7 +170,7 @@ export default class CreateCategory extends Vue {
       });
     }
   }
-  public addNewProduct(event: Event) {
+  addNewProduct(event: Event) {
     console.log(this.productData);
     this.calculateDiscount();
     globalEventBus.$emit("loading", true, "Adding product data..");
@@ -206,7 +206,7 @@ export default class CreateCategory extends Vue {
       console.log(e);
     }
   }
-  public showMsg(flag: number, msg: string) {
+  showMsg(flag: number, msg: string) {
     this.success = {
       flag,
       msg
@@ -218,15 +218,15 @@ export default class CreateCategory extends Vue {
       };
     }, 3000);
   }
-  public goBack() {
+  goBack() {
     this.$router.replace({ path: "/admin" });
   }
-  public printLog(groupId: number) {
+  printLog(groupId: number) {
     const cat = this.shoppingList.filter(item => item.groupId == groupId);
     console.log(cat[0].title);
     this.productData.category = cat[0].title;
   }
-  public calculateDiscount() {
+  calculateDiscount() {
     const price = parseInt(this.productData.price + "");
     if (isNaN(price)) {
       return;

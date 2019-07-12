@@ -2,12 +2,12 @@
   <li class="list-group-item">
     <span
       class="iconBase"
-      @click="toggleMenu(item.name)"
+      @click="toggleMenu(item.name, item.items)"
       :style="{backgroundColor: item.color}"
       :class="{'scaleYAnim': currentItemMenuVisible === item.name}"
     >
       <img :alt="item.title" v-if="item.iconType == 'image'" :src="item.icon" />
-      <i class="icon" :class="[`ion-${item.icon}`]" v-else></i>
+      <faIcon :icon="`${item.icon}`"></faIcon>
     </span>
     <span @click="toggleMenu(item.name)">
       {{item.title}}
@@ -17,20 +17,24 @@
         name="scale-fade"
         v-if="item.items && currentItemMenuVisible === item.name"
       >
-        <li
+        <router-link
           class="dropdown-item"
           @click.stop
           v-for="(it, ind) in item.items"
           :key="`item_${ind}`"
           :data-index="ind"
+          :to="`${item.groupId}?subcat=${it}`"
           :style="{transitionDelay: `${ind/5}s`}"
         >
           <span>{{it}}</span>
           <button class="btn btn-link">
-            <i class="icon ion-md-arrow-forward"></i>
+            <faIcon icon="arrow-right"></faIcon>
           </button>
-        </li>
+        </router-link>
       </transition-group>
+      <button class="btn btn-link text-dark float-right">
+        <faIcon icon="arrow-right"></faIcon>
+      </button>
     </span>
   </li>
 </template>
@@ -41,15 +45,17 @@ import { IShoppingCategory } from "@/interface/ICategory";
 export default class ListItem extends Vue {
   @Prop() public item!: IShoppingCategory;
   public currentItemMenuVisible: string = "";
-  public toggleMenu(menuName: string) {
-    if (this.currentItemMenuVisible === "") {
-      this.currentItemMenuVisible = menuName;
+  public toggleMenu(menuName: string, subCat: string[]) {
+    if (subCat && subCat.length > 0) {
+      if (this.currentItemMenuVisible === "") {
+        this.currentItemMenuVisible = menuName;
+      } else {
+        this.currentItemMenuVisible = "";
+      }
     } else {
-      this.currentItemMenuVisible = "";
+      this.$router.push({ path: `product-list/${this.item.groupId}` });
+      this.$store.dispatch("toggleNavbar", false);
     }
-  }
-  public addItem(event: Event) {
-    event.stopPropagation();
   }
 }
 </script>
@@ -68,9 +74,9 @@ export default class ListItem extends Vue {
     cursor: pointer;
     display: table-cell;
   }
-  > span:last-child {
-    padding-left: 1rem;
-  }
+  // > span:last-child {
+  //   padding-left: 1rem;
+  // }
 
   .iconBase {
     cursor: pointer;

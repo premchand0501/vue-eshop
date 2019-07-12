@@ -9,16 +9,23 @@ export default new Router({
       path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "Shopping" */ './views/Shopping/Shopping.vue'),
+      children: [
+        {
+          path: 'product-list/:group_id',
+          name: 'product-list',
+          component: () => import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue'),
+        },
+        {
+          path: 'product-details/:prod_id',
+          name: 'product-details',
+          component: () => import(/* webpackChunkName: "ProductDetails" */ './views/Shopping/ProductDetails.vue'),
+        }
+      ]
     },
     {
-      path: '/product-list/:group_id',
-      name: 'product-list',
-      component: () => import(/* webpackChunkName: "ProductList" */ './views/Shopping/ProductList.vue'),
-    },
-    {
-      path: '/product-details/:prod_id',
-      name: 'product-details',
-      component: () => import(/* webpackChunkName: "ProductDetails" */ './views/Shopping/ProductDetails.vue'),
+      path: '/search',
+      name: 'search',
+      component: () => import(/* webpackChunkName: "Search" */ './views/Shopping/Search.vue'),
     },
     {
       path: '/admin',

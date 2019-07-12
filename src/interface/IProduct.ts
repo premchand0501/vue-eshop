@@ -1,7 +1,7 @@
 export interface IProduct {
-    name: String;
-    description: String;
-    image: String;
+    name: string;
+    description: string;
+    image: string;
     discount: number;
     price: number;
     discountedPrice: number;
@@ -12,7 +12,9 @@ export interface IProduct {
     productId: number
 }
 export interface IProductList {
-    group: IProduct[];
+    products: IProduct[];
+    landingProducts: IProduct[];
+    landingPageCategories: string[]
 }
 export interface IProductDetails {
     detail: IProduct | undefined;

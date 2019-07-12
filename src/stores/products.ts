@@ -6,24 +6,26 @@ import { firebaseDatabase, globalEventBus } from '@/main';
 
 export const products: Module<IProductList, IRootStore> = {
     state: {
-        group: [],
+        products: [],
+        landingProducts: [],
+        landingPageCategories: []
     },
     getters: {
         allProducts(state: IProductList) {
-            return state.group;
+            return state.products;
+        },
+        allLandingProducts(state: IProductList) {
+            return state.landingProducts;
+        },
+        allLandingPageCategories(state: IProductList) {
+            return state.landingPageCategories;
         },
     },
     mutations: {
         loadAllProducts(state: IProductList) {
-            firebaseDatabase.ref('products').once('value', (snapshot) => {
-                state.group = snapshot.val();
-                console.log(state.group);
-            });
-        },
-        loadProductsByGroupId(state: IProductList, groupId: string) {
-            firebaseDatabase.ref(`products/${groupId}`).once('value', (snapshot) => {
-                state.group = snapshot.val();
-                console.log(state.group);
+            firebaseDatabase.ref('products').on('value', (snapshot) => {
+                state.products = snapshot.val();
+                state.products = state.products.filter(item => item != null)
             });
         },
         loadProductsByCategory(state: IProductList, query: Query) {
@@ -32,15 +34,37 @@ export const products: Module<IProductList, IRootStore> = {
                 firebaseDatabase.ref('products')
                     .orderByChild(query.key)
                     .equalTo(query.value)
-                    .once('value', (snapshot) => {
-                        state.group = snapshot.val();
-                        console.log(state.group);
+                    .on('value', (snapshot) => {
+                        state.products = snapshot.val();
+                        state.products = state.products.filter(item => item != null)
+                    });
+            }
+        },
+        loadAllLandingProducts(state: IProductList) {
+            firebaseDatabase.ref('products').on('value', (snapshot) => {
+                state.landingProducts = snapshot.val();
+                state.landingProducts = state.landingProducts.filter(item => item != null)
+            });
+        },
+        loadLandingProductsByCategory(state: IProductList, query: Query) {
+            console.log(query);
+            if (query !== undefined) {
+                firebaseDatabase.ref('products')
+                    .orderByChild(query.key)
+                    .equalTo(query.value)
+                    .on('value', (snapshot) => {
+                        state.landingProducts = snapshot.val();
+                        state.landingProducts = state.landingProducts.filter(item => item != null)
+                        if (state.landingProducts) {
+                            const catSet: Set<string> = new Set<string>();
+                            state.landingProducts.forEach(item => catSet.add(item.brand));
+                            state.landingPageCategories = [...catSet];
+                        }
                     });
             }
         },
         addNewProductToGroup(state: IProductList, item: IProduct) {
-            firebaseDatabase.ref(`products/${state.group.length}`).set(item, (err) => {
-                console.log(err);
+            firebaseDatabase.ref(`products/${state.products.length}`).set(item, (err) => {
                 globalEventBus.$emit('addNewProductToGroup', err);
             });
         },
@@ -49,11 +73,14 @@ export const products: Module<IProductList, IRootStore> = {
         loadAllProducts(context: ActionContext<IProductList, IRootStore>) {
             context.commit('loadAllProducts');
         },
-        loadProductsByGroupId(context: ActionContext<IProductList, IRootStore>, groupId: string) {
-            context.commit('loadProductsByGroupId', groupId);
-        },
         loadProductsByCategory(context: ActionContext<IProductList, IRootStore>, query: object) {
             context.commit('loadProductsByCategory', query);
+        },
+        loadAllLandingProducts(context: ActionContext<IProductList, IRootStore>) {
+            context.commit('loadAllLandingProducts');
+        },
+        loadLandingProductsByCategory(context: ActionContext<IProductList, IRootStore>, query: object) {
+            context.commit('loadLandingProductsByCategory', query);
         },
         addNewProductToGroup(context: ActionContext<IProductList, IRootStore>, product: IProduct) {
             context.commit('addNewProductToGroup', product);

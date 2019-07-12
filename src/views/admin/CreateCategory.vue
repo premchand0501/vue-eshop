@@ -44,14 +44,13 @@
                 placeholder="Sub Categories"
                 class="form-control"
                 v-model="categoryData.items"
-                required
               />
               <p>
                 <small>Seperate multiple sub categories with comma.</small>
               </p>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
-            <button type="submit" class="btn btn-outline-dark ml-3" @click="goBack">Cancel</button>
+            <button class="btn btn-outline-dark ml-3" @click="goBack">Cancel</button>
           </form>
         </div>
       </div>
@@ -67,35 +66,42 @@ import { mapGetters } from "vuex";
   computed: mapGetters(["shoppingList"])
 })
 export default class CreateCategory extends Vue {
-  public categoryData = {
-    title: "Facebook",
-    icon: "logo-facebook",
-    color: "red",
+  categoryData = {
+    title: "",
+    icon: "",
+    color: "",
     iconType: "icon",
-    items: "news, status"
+    items: ""
   };
-  public shoppingList!: ICategory;
-
-  public addNewCategory() {
+  shoppingList!: ICategory;
+  created() {
+    this.$store.dispatch("loadCategory");
+  }
+  addNewCategory() {
     Object.values(this.categoryData).forEach(item => {
       if (item == "") {
         return;
       }
     });
-    const listItem: string[] = this.categoryData.items.trim().split(",");
+    let listItem: string[] = [];
+    let listItemTrimmed: string[] = [];
+    if (this.categoryData.items != "") {
+      listItem = this.categoryData.items.trim().split(",");
+      listItemTrimmed = listItem.map(i => i.trim());
+    }
     const category: IShoppingCategory = {
       ...this.categoryData,
       icon:
         this.categoryData.iconType === "image"
           ? this.categoryData.icon + ".svg"
           : this.categoryData.icon,
-      items: listItem.map(i => i.trim()),
+      items: listItemTrimmed,
       groupId: 0
     };
     this.$store.dispatch("addCategory", category);
     this.goBack();
   }
-  public goBack() {
+  goBack() {
     this.$router.replace({ path: "/admin" });
   }
 }

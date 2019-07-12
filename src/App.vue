@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="fall-in">
+    <transition name="slideup">
       <router-view />
     </transition>
     <div class="loading" v-show="loading">

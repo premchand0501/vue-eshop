@@ -106,3 +106,20 @@ animation: pullAnimIn 0.25s ease forwards reverse 1;
         transform: translateY(0);
     }
 }
+
+.slideup-enter-active {
+animation: slideupAnimIn 0.25s ease-out forwards 1;
+}
+.slideup-leave-active {
+animation: slideupAnimIn 0.25s ease-out forwards reverse 1;
+}
+@keyframes slideupAnimIn {
+    0% {
+        transform: translateY(10vw);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

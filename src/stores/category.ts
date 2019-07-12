@@ -20,7 +20,8 @@ export const category: Module<ICategory, IRootStore> = {
             });
         },
         addCategory(state: ICategory, item: IShoppingCategory) {
-            firebaseDatabase.ref('categories/' + state.categoryList.length).set({ ...item, groupId: state.categoryList.length });
+            const newCat = { ...item, groupId: state.categoryList.length };
+            firebaseDatabase.ref('categories/' + state.categoryList.length).set(newCat);
         },
     },
     actions: {

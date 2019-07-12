@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import {store} from './stores';
+import { store } from './stores';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSuitcaseRolling, faSearch, faShoppingBag, faArrowRight, faClock, faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import firebase from 'firebase/app';
 import 'firebase/database';
@@ -31,3 +35,13 @@ const eshop = firebase.initializeApp(firebaseConfig);
 export const firebaseDatabase = eshop.database();
 export const firebaseStorage = eshop.storage();
 export const firebaseAuth = eshop.auth();
+
+library.add(faSuitcaseRolling);
+library.add(faSearch);
+library.add(faShoppingBag);
+library.add(faArrowRight);
+library.add(faArrowLeft);
+library.add(faBars);
+library.add(faClock);
+
+Vue.component('faIcon', FontAwesomeIcon);
