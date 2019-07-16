@@ -59,23 +59,23 @@
   </transition>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import { mapGetters } from "vuex";
-import Navbar from "@/components/shopping/Navbar.vue";
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import Navbar from '@/components/shopping/Navbar.vue';
 @Component({
   components: { Navbar },
-  computed: mapGetters(["searchKeywords"])
+  computed: mapGetters(['searchKeywords']),
 })
 export default class Search extends Vue {
-  public searchInput: string = "";
+  public searchInput: string = '';
   public searchKeywords!: string[];
 
   public searchRequest(event: Event) {
     event.stopPropagation();
-    console.log("submit");
-    this.$store.dispatch("addSearchKeyword", this.searchInput);
+    console.log('submit');
+    this.$store.dispatch('addSearchKeyword', this.searchInput);
   }
-  goBack() {
+  public goBack() {
     this.$router.back();
   }
 }

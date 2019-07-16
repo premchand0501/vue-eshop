@@ -58,51 +58,51 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { IShoppingCategory, ICategory } from "@/interface/ICategory";
-import { mapGetters } from "vuex";
+import { Vue, Component } from 'vue-property-decorator';
+import { IShoppingCategory, ICategory } from '@/interface/ICategory';
+import { mapGetters } from 'vuex';
 
 @Component({
-  computed: mapGetters(["shoppingList"])
+  computed: mapGetters(['shoppingList']),
 })
 export default class CreateCategory extends Vue {
-  categoryData = {
-    title: "",
-    icon: "",
-    color: "",
-    iconType: "icon",
-    items: ""
+  public categoryData = {
+    title: '',
+    icon: '',
+    color: '',
+    iconType: 'icon',
+    items: '',
   };
-  shoppingList!: ICategory;
-  created() {
-    this.$store.dispatch("loadCategory");
+  public shoppingList!: ICategory;
+  public created() {
+    this.$store.dispatch('loadCategory');
   }
-  addNewCategory() {
-    Object.values(this.categoryData).forEach(item => {
-      if (item == "") {
+  public addNewCategory() {
+    Object.values(this.categoryData).forEach((item) => {
+      if (item == '') {
         return;
       }
     });
     let listItem: string[] = [];
     let listItemTrimmed: string[] = [];
-    if (this.categoryData.items != "") {
-      listItem = this.categoryData.items.trim().split(",");
-      listItemTrimmed = listItem.map(i => i.trim());
+    if (this.categoryData.items != '') {
+      listItem = this.categoryData.items.trim().split(',');
+      listItemTrimmed = listItem.map((i) => i.trim());
     }
     const category: IShoppingCategory = {
       ...this.categoryData,
       icon:
-        this.categoryData.iconType === "image"
-          ? this.categoryData.icon + ".svg"
+        this.categoryData.iconType === 'image'
+          ? this.categoryData.icon + '.svg'
           : this.categoryData.icon,
       items: listItemTrimmed,
-      groupId: 0
+      groupId: 0,
     };
-    this.$store.dispatch("addCategory", category);
+    this.$store.dispatch('addCategory', category);
     this.goBack();
   }
-  goBack() {
-    this.$router.replace({ path: "/admin" });
+  public goBack() {
+    this.$router.replace({ path: '/admin' });
   }
 }
 </script>

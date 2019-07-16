@@ -44,29 +44,29 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { mapGetters } from "vuex";
-import { IProductList, Query, IProduct } from "@/interface/IProduct";
-import Navbar from "@/components/shopping/Navbar.vue";
+import { Vue, Component } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import { IProductList, Query, IProduct } from '@/interface/IProduct';
+import Navbar from '@/components/shopping/Navbar.vue';
 @Component({
   components: { Navbar },
-  computed: mapGetters(["allProducts"])
+  computed: mapGetters(['allProducts']),
 })
 export default class ProductList extends Vue {
-  allProducts!: IProduct[];
-  groupId!: number;
-  created() {
+  public allProducts!: IProduct[];
+  public groupId!: number;
+  public created() {
     console.log(this.allProducts);
     this.groupId = +this.$route.params.group_id;
     console.log(this.groupId);
     this.$store
-      .dispatch("loadProductsByCategory", {
-        key: "groupId",
-        value: this.groupId
+      .dispatch('loadProductsByCategory', {
+        key: 'groupId',
+        value: this.groupId,
       } as Query)
       .then(() => console.log(JSON.stringify(this.allProducts)));
   }
-  goBack() {
+  public goBack() {
     this.$router.back();
   }
 }

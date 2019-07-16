@@ -10,6 +10,7 @@ import { Vue, Component } from "vue-property-decorator";
 import List from "@/components/shopping/List.vue";
 import { IShoppingCategory } from "@/interface/ICategory";
 import { mapGetters } from "vuex";
+import { globalEventBus } from "../../main";
 
 @Component({
   components: { List },
@@ -18,13 +19,11 @@ import { mapGetters } from "vuex";
 export default class SideMenu extends Vue {
   public shoppingList!: IShoppingCategory[];
   public created() {
-    this.$store
-      .dispatch("loadCategory")
-      .then(() => console.log(this.shoppingList));
-    console.log("sidemenu");
+    this.$store.dispatch("loadCategory");
   }
   public hideMenu() {
     this.$store.dispatch("toggleNavbar", false);
+    globalEventBus.$emit("updateSwiper", true);
   }
 }
 </script>

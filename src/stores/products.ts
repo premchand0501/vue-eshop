@@ -8,7 +8,7 @@ export const products: Module<IProductList, IRootStore> = {
     state: {
         products: [],
         landingProducts: [],
-        landingPageCategories: []
+        landingPageCategories: [],
     },
     getters: {
         allProducts(state: IProductList) {
@@ -25,7 +25,7 @@ export const products: Module<IProductList, IRootStore> = {
         loadAllProducts(state: IProductList) {
             firebaseDatabase.ref('products').on('value', (snapshot) => {
                 state.products = snapshot.val();
-                state.products = state.products.filter(item => item != null)
+                state.products = state.products.filter((item) => item != null);
             });
         },
         loadProductsByCategory(state: IProductList, query: Query) {
@@ -36,14 +36,14 @@ export const products: Module<IProductList, IRootStore> = {
                     .equalTo(query.value)
                     .on('value', (snapshot) => {
                         state.products = snapshot.val();
-                        state.products = state.products.filter(item => item != null)
+                        state.products = state.products.filter((item) => item != null);
                     });
             }
         },
         loadAllLandingProducts(state: IProductList) {
             firebaseDatabase.ref('products').on('value', (snapshot) => {
                 state.landingProducts = snapshot.val();
-                state.landingProducts = state.landingProducts.filter(item => item != null)
+                state.landingProducts = state.landingProducts.filter((item) => item != null);
             });
         },
         loadLandingProductsByCategory(state: IProductList, query: Query) {
@@ -54,10 +54,10 @@ export const products: Module<IProductList, IRootStore> = {
                     .equalTo(query.value)
                     .on('value', (snapshot) => {
                         state.landingProducts = snapshot.val();
-                        state.landingProducts = state.landingProducts.filter(item => item != null)
+                        state.landingProducts = state.landingProducts.filter((item) => item != null);
                         if (state.landingProducts) {
                             const catSet: Set<string> = new Set<string>();
-                            state.landingProducts.forEach(item => catSet.add(item.brand));
+                            state.landingProducts.forEach((item) => catSet.add(item.brand));
                             state.landingPageCategories = [...catSet];
                         }
                     });

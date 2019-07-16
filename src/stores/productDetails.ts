@@ -6,7 +6,7 @@ import { firebaseDatabase } from '@/main';
 
 export const productDetails: Module<IProductDetails, IRootStore> = {
   state: {
-    detail: undefined
+    detail: undefined,
   },
   getters: {
     detail(state: IProductDetails) {
@@ -19,11 +19,11 @@ export const productDetails: Module<IProductDetails, IRootStore> = {
         state.detail = snapshot.val();
         console.log('details', JSON.stringify(state.detail));
       });
-    }
+    },
   },
   actions: {
     getProductDetails(context: ActionContext<IProductDetails, IRootStore>, productId: number) {
       context.commit('getProductDetails', productId);
-    }
+    },
   },
 };

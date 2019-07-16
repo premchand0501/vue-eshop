@@ -51,17 +51,17 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import { IProduct } from "@/interface/IProduct";
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { IProduct } from '@/interface/IProduct';
 
 @Component
 export default class ProductGroup extends Vue {
   @Prop() public productProp!: IProduct[];
   public productsFiltered!: IProduct[];
   @Prop() public catTitle!: string;
-  created() {
+  public created() {
     this.productsFiltered = this.productProp.filter(
-      item => item.brand === this.catTitle
+      (item) => item.brand === this.catTitle,
     );
     console.log(JSON.stringify(this.productProp));
   }

@@ -39,22 +39,22 @@
   </li>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import { IShoppingCategory } from "@/interface/ICategory";
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { IShoppingCategory } from '@/interface/ICategory';
 @Component
 export default class ListItem extends Vue {
   @Prop() public item!: IShoppingCategory;
-  public currentItemMenuVisible: string = "";
+  public currentItemMenuVisible: string = '';
   public toggleMenu(menuName: string, subCat: string[]) {
     if (subCat && subCat.length > 0) {
-      if (this.currentItemMenuVisible === "") {
+      if (this.currentItemMenuVisible === '') {
         this.currentItemMenuVisible = menuName;
       } else {
-        this.currentItemMenuVisible = "";
+        this.currentItemMenuVisible = '';
       }
     } else {
       this.$router.push({ path: `product-list/${this.item.groupId}` });
-      this.$store.dispatch("toggleNavbar", false);
+      this.$store.dispatch('toggleNavbar', false);
     }
   }
 }

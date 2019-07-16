@@ -9,15 +9,15 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { globalEventBus } from "./main";
+import { Vue, Component } from 'vue-property-decorator';
+import { globalEventBus } from './main';
 
 @Component
 export default class App extends Vue {
   public loading: boolean = false;
-  public loadingText: string = "";
+  public loadingText: string = '';
   public created() {
-    globalEventBus.$on("loading", (flag: boolean, text: string) => {
+    globalEventBus.$on('loading', (flag: boolean, text: string) => {
       this.loading = flag;
       this.loadingText = text;
     });

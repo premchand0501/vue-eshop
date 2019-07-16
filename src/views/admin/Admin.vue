@@ -21,11 +21,11 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import CreateCategory from "./CreateCategory.vue";
+import { Vue, Component } from 'vue-property-decorator';
+import CreateCategory from './CreateCategory.vue';
 
 @Component({
-  components: { CreateCategory }
+  components: { CreateCategory },
 })
 export default class Admin extends Vue {}
 </script>

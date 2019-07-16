@@ -1,0 +1,26 @@
+[
+  {
+    "details": {
+      "title": "Slide 1",
+      "desc": "Slide 1 description",
+      "link": "google.com"
+    },
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/eshop-6490c.appspot.com/o/product-images%2Fbag_banner.jpg?alt=media&token=ec9fff53-4076-480c-8248-ad02bebd5181"
+  },
+  {
+    "details": {
+      "title": "Slide 2",
+      "desc": "Slide 2 description",
+      "link": "google.com"
+    },
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/eshop-6490c.appspot.com/o/product-images%2Fbag_banner2.jpg?alt=media&token=b1fe37b2-28f1-43be-b4e4-eb707f2f7d24"
+  },
+  {
+    "details": {
+      "title": "Slide 3",
+      "desc": "Slide 3 description",
+      "link": "google.com"
+    },
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/eshop-6490c.appspot.com/o/product-images%2Fbag_banner3.jpg?alt=media&token=c585b8e7-321f-41e2-b1f9-b79151dc780b"
+  }
+]

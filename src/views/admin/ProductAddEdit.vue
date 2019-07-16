@@ -115,90 +115,90 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { IShoppingCategory } from "@/interface/ICategory";
-import { mapGetters } from "vuex";
-import { firebaseStorage, globalEventBus } from "../../main";
-import { IProduct, IProductList } from "../../interface/IProduct";
+import { Vue, Component } from 'vue-property-decorator';
+import { IShoppingCategory } from '@/interface/ICategory';
+import { mapGetters } from 'vuex';
+import { firebaseStorage, globalEventBus } from '../../main';
+import { IProduct, IProductList } from '../../interface/IProduct';
 
 @Component({
-  computed: mapGetters(["shoppingList", "allProducts"])
+  computed: mapGetters(['shoppingList', 'allProducts']),
 })
 export default class CreateCategory extends Vue {
-  allProducts!: IProduct[];
-  success = {
+  public allProducts!: IProduct[];
+  public success = {
     flag: -1,
-    msg: ""
+    msg: '',
   };
-  shoppingList!: IShoppingCategory[];
-  productData: IProduct = {
-    name: "Ducati DAYPACK 24 L Laptop Backpack",
+  public shoppingList!: IShoppingCategory[];
+  public productData: IProduct = {
+    name: 'Ducati DAYPACK 24 L Laptop Backpack',
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem animi deleniti, aperiam cupiditate porro in aliquam? Maiores ipsum aliquid libero, dolore similique repellendus nemo id qui voluptatum deserunt ratione odit!",
-    image: "",
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem animi deleniti, aperiam cupiditate porro in aliquam? Maiores ipsum aliquid libero, dolore similique repellendus nemo id qui voluptatum deserunt ratione odit!',
+    image: '',
     discount: 79,
     price: 2799,
     discountedPrice: 0,
-    category: "Laptop Backpack",
-    brand: "Ducati & Giordano",
+    category: 'Laptop Backpack',
+    brand: 'Ducati & Giordano',
     groupId: 0,
     showOnLandingPage: false,
-    productId: 0
+    productId: 0,
   };
-  fileName: string = "";
+  public fileName: string = '';
 
-  created() {
-    this.$store.dispatch("loadCategory");
-    this.$store.dispatch("loadAllProducts");
+  public created() {
+    this.$store.dispatch('loadCategory');
+    this.$store.dispatch('loadAllProducts');
   }
-  uploadProdImage(event: Event) {
+  public uploadProdImage(event: Event) {
     const formEl: HTMLInputElement = event.target as HTMLInputElement;
     console.log(formEl.files);
     if (formEl.files!.length > 0) {
       this.fileName = formEl.files![0].name;
-      globalEventBus.$emit("loading", true, "Uploading image..");
+      globalEventBus.$emit('loading', true, 'Uploading image..');
       const uploadTask = firebaseStorage
         .ref()
-        .child("product-images/" + formEl.files![0].name)
+        .child('product-images/' + formEl.files![0].name)
         .put(formEl.files![0], { contentType: formEl.files![0].type });
 
-      uploadTask.on("state_changed", null, null, () => {
+      uploadTask.on('state_changed', null, null, () => {
         uploadTask.snapshot.ref
           .getDownloadURL()
-          .then(res => (this.productData.image = res));
-        globalEventBus.$emit("loading", false);
+          .then((res) => (this.productData.image = res));
+        globalEventBus.$emit('loading', false);
       });
     }
   }
-  addNewProduct(event: Event) {
+  public addNewProduct(event: Event) {
     console.log(this.productData);
     this.calculateDiscount();
-    globalEventBus.$emit("loading", true, "Adding product data..");
+    globalEventBus.$emit('loading', true, 'Adding product data..');
     try {
       this.productData.productId = this.allProducts.length;
       this.$store
-        .dispatch("addNewProductToGroup", this.productData)
+        .dispatch('addNewProductToGroup', this.productData)
         .then(() => {
-          globalEventBus.$emit("loading", false);
-          globalEventBus.$on("addNewProductToGroup", (errObject: Object) => {
+          globalEventBus.$emit('loading', false);
+          globalEventBus.$on('addNewProductToGroup', (errObject: Object) => {
             if (errObject == null) {
               this.productData = {
-                name: "",
-                description: "",
-                image: "",
+                name: '',
+                description: '',
+                image: '',
                 discount: 0,
                 price: 0,
                 discountedPrice: 0,
-                category: "",
-                brand: "",
+                category: '',
+                brand: '',
                 groupId: 0,
                 showOnLandingPage: false,
-                productId: 0
+                productId: 0,
               };
-              this.fileName = "";
-              this.showMsg(1, "Product added successfully");
+              this.fileName = '';
+              this.showMsg(1, 'Product added successfully');
             } else {
-              this.showMsg(0, "Something went wrong...");
+              this.showMsg(0, 'Something went wrong...');
             }
           });
         });
@@ -206,32 +206,32 @@ export default class CreateCategory extends Vue {
       console.log(e);
     }
   }
-  showMsg(flag: number, msg: string) {
+  public showMsg(flag: number, msg: string) {
     this.success = {
       flag,
-      msg
+      msg,
     };
     setTimeout(() => {
       this.success = {
         flag: -1,
-        msg: ""
+        msg: '',
       };
     }, 3000);
   }
-  goBack() {
-    this.$router.replace({ path: "/admin" });
+  public goBack() {
+    this.$router.replace({ path: '/admin' });
   }
-  printLog(groupId: number) {
-    const cat = this.shoppingList.filter(item => item.groupId == groupId);
+  public printLog(groupId: number) {
+    const cat = this.shoppingList.filter((item) => item.groupId == groupId);
     console.log(cat[0].title);
     this.productData.category = cat[0].title;
   }
-  calculateDiscount() {
-    const price = parseInt(this.productData.price + "");
+  public calculateDiscount() {
+    const price = parseInt(this.productData.price + '');
     if (isNaN(price)) {
       return;
     }
-    const discountPercent = parseFloat(this.productData.discount + "");
+    const discountPercent = parseFloat(this.productData.discount + '');
     if (isNaN(discountPercent) || discountPercent > 100) {
       return;
     }

@@ -1,11 +1,18 @@
 <template>
   <div class="container-fluid p-0">
     <div ref="swiperContainer" class="swiper-container">
-      <div class="swiper-wrapper">
+      <div class="swiper-wrapper" v-if="slides">
         <!-- Slides -->
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
+        <div class="swiper-slide" v-for="(slide, index) in slides" :key="`slide_${index}`">
+          <router-link :to="slide.details.link">
+            <img
+              :src="slide.imageUrl"
+              :alt="slide.details.title"
+              class="swiper-lazy"
+              @load="updateSwiper"
+            />
+          </router-link>
+        </div>
       </div>
       <!-- If we need pagination -->
       <div class="swiper-pagination"></div>
@@ -26,9 +33,15 @@ import Swiper, {
   SwiperOptions,
   NavigationOptions
 } from "swiper";
+import { firebaseDatabase } from "../../main";
+import { mapGetters } from "vuex";
+import { ISlides } from "@/interface/ISlides";
 
-@Component
+@Component({
+  computed: mapGetters(["slides"])
+})
 export default class SwiperWrapper extends Vue {
+  slides!: ISlides[];
   public mySwiper!: Swiper;
   public mySwiperNextBtn!: HTMLElement;
   public mySwiperPrevBtn!: HTMLElement;
@@ -36,6 +49,7 @@ export default class SwiperWrapper extends Vue {
   public swiperOptions!: SwiperOptions;
   public created() {
     window.addEventListener("resize", this.updateSwiper);
+    this.$store.dispatch("loadAllSlides").then(() => this.updateSwiper());
   }
   public updateSwiper() {
     this.mySwiper.update();
@@ -46,6 +60,8 @@ export default class SwiperWrapper extends Vue {
     this.swiperOptions = {
       autoplay: true,
       spaceBetween: 20,
+      lazy: true,
+      preloadImages: false,
       navigation: {
         nextEl: this.$refs.mySwiperNextBtn as HTMLElement,
         prevEl: this.$refs.mySwiperPrevBtn as HTMLElement
@@ -53,6 +69,17 @@ export default class SwiperWrapper extends Vue {
       pagination: {
         el: this.$refs.mySwiperPagination as HTMLElement,
         clickable: true
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 1
+        },
+        1200: {
+          slidesPerView: 2
+        },
+        1920: {
+          slidesPerView: 3
+        }
       }
     };
     this.mySwiper = new Swiper(
@@ -60,7 +87,7 @@ export default class SwiperWrapper extends Vue {
       this.swiperOptions
     );
   }
-  public destroyed() {
+  public beforeDestroy() {
     window.removeEventListener("resize", this.updateSwiper);
   }
 }
@@ -77,8 +104,15 @@ export default class SwiperWrapper extends Vue {
   .swiper-slide {
     background-color: $light;
     border-radius: 0.25rem;
-    padding: 1rem;
     margin-right: 1rem;
+    background: #ddd no-repeat center / contain;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      height: 30vh;
+      width: 100%;
+    }
   }
   .swiper-button-next {
     transform: scale(0.6);

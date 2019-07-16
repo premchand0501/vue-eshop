@@ -1,5 +1,9 @@
 <template>
-  <div class="container-fluid app" :class="{'active': navbarToggle}">
+  <div
+    class="container-fluid app"
+    :class="{'active': navbarToggle}"
+    :style="{paddingLeft: !navbarToggle?'2rem': '1rem'}"
+  >
     <div class="row">
       <Navbar class="w-100">
         <template v-slot:navLeftButtons>
@@ -58,23 +62,28 @@ import { IProduct, Query } from "@/interface/IProduct";
   ])
 })
 export default class Shopping extends Vue {
-  allLandingProducts!: IProduct[];
-  allLandingPageCategories!: string[];
+  public allLandingProducts!: IProduct[];
+  public allLandingPageCategories!: string[];
 
-  searchToggle!: boolean;
-  navbarToggle!: boolean;
-  enableSearch() {
+  public searchToggle!: boolean;
+  public navbarToggle!: boolean;
+
+  public enableSearch() {
     this.$store.dispatch("toggleSearch", true);
   }
-  addNewCategory() {
+  public addNewCategory() {
     this.$router.push(this.$route.path + "/create-category");
   }
-  showSideMenu() {
-    let flag = !this.navbarToggle;
+  public showSideMenu() {
+    const flag = !this.navbarToggle;
     this.$store.dispatch("toggleNavbar", flag);
   }
 
-  created() {
+  public beforeCreate() {
+    document.title = "eShop | Vuex and Firebase E-Commerce app";
+  }
+
+  public created() {
     if (window.innerWidth > 850) {
       this.$store.dispatch("toggleNavbar", true);
     }
@@ -82,9 +91,6 @@ export default class Shopping extends Vue {
       key: "showOnLandingPage",
       value: "true"
     } as Query);
-  }
-  beforeCreate() {
-    document.title = "eShop | Vuex and Firebase E-Commerce app";
   }
 }
 </script>
@@ -95,7 +101,7 @@ export default class Shopping extends Vue {
 }
 @media screen and (min-width: 850px) {
   .app.active {
-    padding-left: 335px;
+    padding-left: 335px !important;
   }
 }
 </style>

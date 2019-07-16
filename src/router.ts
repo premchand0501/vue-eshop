@@ -19,8 +19,8 @@ export default new Router({
           path: 'product-details/:prod_id',
           name: 'product-details',
           component: () => import(/* webpackChunkName: "ProductDetails" */ './views/Shopping/ProductDetails.vue'),
-        }
-      ]
+        },
+      ],
     },
     {
       path: '/search',

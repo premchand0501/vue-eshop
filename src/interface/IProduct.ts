@@ -9,12 +9,12 @@ export interface IProduct {
     brand: string;
     groupId: number;
     showOnLandingPage: boolean;
-    productId: number
+    productId: number;
 }
 export interface IProductList {
     products: IProduct[];
     landingProducts: IProduct[];
-    landingPageCategories: string[]
+    landingPageCategories: string[];
 }
 export interface IProductDetails {
     detail: IProduct | undefined;

@@ -20,18 +20,32 @@
     </Navbar>
     <div class="container">
       <div class="row">
-        <div class="col col-12 col-md-6 col-sm-6">
+        <div class="col col-12 col-md-6 col-sm-6 mb-3">
           <div class="productImage">
             <img :src="detail.image" :alt="detail.name" class="img-fluid" />
           </div>
         </div>
-        <div class="col col-12 col-md-6 col-sm-6">
+        <div class="col col-12 col-md-6 col-sm-6 mb-3">
           <div class="details">
-            <router-link :to="`/product-detail/${detail.groupId}`"></router-link>
             <h2>{{detail.name}}</h2>
+            <router-link :to="`/product-detail/${detail.groupId}`">{{detail.brand}}</router-link>
             <hr />
-            <h4>₹{{ detail.discountedPrice }}</h4>
-            <p>{{ detail.description }}</p>
+            <div class="d-flex justify-content-between">
+              <span class="d-block">₹{{detail.discountedPrice}}</span>
+              <button class="btn btn-primary">Buy</button>
+            </div>
+            <ul class="list-group mt-3">
+              <li class="list-group-item dropdown" @click="openPanel('details')">Details</li>
+              <div class="dropdown-menu" :class="{'show': currentToggle == 'details'}">
+                <p class="p-3">{{ detail.description }}</p>
+              </div>
+            </ul>
+            <ul class="list-group mt-3">
+              <li class="list-group-item dropdown" @click="openPanel('shipping')">Shipping</li>
+              <div class="dropdown-menu" :class="{'show': currentToggle == 'shipping'}">
+                <p class="p-3">{{ detail.description }}</p>
+              </div>
+            </ul>
           </div>
         </div>
       </div>
@@ -41,27 +55,29 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { mapGetters } from "vuex";
-import { IProduct } from "../../interface/IProduct";
+import { IProduct } from "@/interface/IProduct";
 import Navbar from "@/components/shopping/Navbar.vue";
+
 @Component({
   components: { Navbar },
   computed: mapGetters(["detail"])
 })
 export default class ProductDetails extends Vue {
-  detail!: IProduct;
-  productId!: number;
-  created() {
+  public detail!: IProduct;
+  public productId!: number;
+  public currentToggle = "";
+  public created() {
     this.productId = +this.$route.params.prod_id;
     console.log(this.productId);
     this.$store
       .dispatch("getProductDetails", this.productId)
       .then(() => console.log(JSON.stringify(this.detail)));
   }
-  beforeDestroy() {
-    this.detail = { ...this.detail, image: "" };
-  }
-  goBack() {
+  public goBack() {
     this.$router.back();
+  }
+  public openPanel(panel: string) {
+    this.currentToggle = this.currentToggle == panel ? "" : panel;
   }
 }
 </script>
@@ -69,6 +85,15 @@ export default class ProductDetails extends Vue {
 .productGroup {
   min-height: 100vh;
   padding-top: 5rem;
+  height: 100vh;
+  overflow-y: auto;
+
+  .dropdown {
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    position: relative;
+  }
   .productImage img {
     height: 50vh;
     max-height: 480px;
