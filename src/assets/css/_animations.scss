@@ -31,6 +31,20 @@
         transform: translateX(0);
     }
 }
+.slide-fade-right-enter-active {
+  animation: slideFadeRight .25s forwards 1;
+}
+.slide-fade-right-leave-active {
+  animation: slideFadeRight .25s reverse 1;
+}
+@keyframes slideFadeRight {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
 
 .reveal-enter-active {
 animation: revealAnimIn 0.25s ease forwards 1;

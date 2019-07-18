@@ -6,25 +6,25 @@
     <div class="loading" v-show="loading">
       <p>{{loadingText}}</p>
     </div>
+    <Snackbar />
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { globalEventBus } from './main';
+import { Vue, Component } from "vue-property-decorator";
+import { globalEventBus } from "./main";
+import Snackbar from "@/components/shopping/Snackbar.vue";
 
-@Component
+@Component({
+  components: { Snackbar }
+})
 export default class App extends Vue {
   public loading: boolean = false;
-  public loadingText: string = '';
+  public loadingText: string = "";
   public created() {
-    globalEventBus.$on('loading', (flag: boolean, text: string) => {
+    globalEventBus.$on("loading", (flag: boolean, text: string) => {
       this.loading = flag;
       this.loadingText = text;
     });
-    // globalEventBus.$on('snackbar', (flag: boolean, text: string)=>{
-    //   this.loading = flag;
-    //   this.loadingText = text;
-    // });
   }
 }
 </script>

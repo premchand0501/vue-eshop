@@ -4,7 +4,7 @@ import router from './router';
 import { store } from './stores';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSuitcaseRolling, faSearch, faShoppingBag, faArrowRight, faClock, faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faSuitcaseRolling, faSearch, faShoppingBag, faArrowRight, faClock, faArrowLeft, faBars, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import firebase from 'firebase/app';
@@ -41,7 +41,9 @@ library.add(faSearch);
 library.add(faShoppingBag);
 library.add(faArrowRight);
 library.add(faArrowLeft);
+library.add(faChevronDown);
 library.add(faBars);
 library.add(faClock);
+library.add(faPlus);
 
 Vue.component('faIcon', FontAwesomeIcon);

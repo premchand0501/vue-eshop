@@ -31,19 +31,24 @@
             v-for="(prod, index) in productsFiltered"
             :key="`product_${index}`"
           >
-            <router-link class="productWrapp" :to="`/product-details/${prod.productId}`">
-              <div class="productImage">
+            <div class="productWrapp">
+              <router-link class="productImage" :to="`/product-details/${prod.productId}`">
                 <img :src="prod.image" :alt="prod.name" class="img-fluid" />
-              </div>
+              </router-link>
               <div class="productDetails">
-                <p>{{ prod.name }}</p>
-                <p>
-                  <span>₹{{ prod.discountedPrice }}</span>&nbsp;
-                  <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
-                  <span class="text-success">{{ prod.discount }}% off</span>
-                </p>
+                <router-link class="detail" :to="`/product-details/${prod.productId}`">
+                  <p>{{ prod.name }}</p>
+                  <p>
+                    <span>₹{{ prod.discountedPrice }}</span>&nbsp;
+                    <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
+                    <span class="text-success">{{ prod.discount }}% off</span>
+                  </p>
+                </router-link>
+                <button class="btn btn-outline-dark cartBtn" @click.stop="addToCart(prod)">
+                  <faIcon icon="plus"></faIcon>
+                </button>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -51,8 +56,8 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import { IProduct } from '@/interface/IProduct';
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { IProduct } from "@/interface/IProduct";
 
 @Component
 export default class ProductGroup extends Vue {
@@ -61,9 +66,12 @@ export default class ProductGroup extends Vue {
   @Prop() public catTitle!: string;
   public created() {
     this.productsFiltered = this.productProp.filter(
-      (item) => item.brand === this.catTitle,
+      item => item.brand === this.catTitle
     );
     console.log(JSON.stringify(this.productProp));
+  }
+  addToCart(prod: IProduct) {
+    this.$store.dispatch("addToCart", prod);
   }
 }
 </script>

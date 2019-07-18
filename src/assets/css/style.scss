@@ -55,13 +55,32 @@ a:hover{
   margin-bottom: 1rem;
   border-radius: 0.25rem;
   .productDetails {
-    text-align: center;
-    p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .detail{
+      flex-basis: calc(100% - 1.5rem);
+      max-width: calc(100% - 1.5rem);
+      p {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+      }
+    }
+    .cartBtn{
+      flex-basis: 1.5rem;
+      max-width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 1rem;
+      padding: 0;
       font-size: 0.75rem;
-      margin-bottom: 0.5rem;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      border-width: 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
   }
   .productGroupHeader {
@@ -95,6 +114,8 @@ a:hover{
       max-height: 150px;
       margin: 0 auto;
       display: block;
+      height: 150px;
+      object-fit: cover;
     }
   }
 }
@@ -132,4 +153,15 @@ a:hover{
   overflow: hidden;
   white-space: nowrap;
   padding: 0;
+}
+.btn{
+  border-radius: 2px;
+  transition: all 0.5s ease;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.btn:not(.btn-link):hover{
+  box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 0.4);
+  transform: translateY(-4px);
+  transition: all 0.5s ease;
 }

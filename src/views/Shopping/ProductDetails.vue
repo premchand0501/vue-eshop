@@ -9,9 +9,7 @@
       </template>
       <template v-slot:navRightButtons>
         <div class="btn-group">
-          <router-link to="/cart" class="btn btn-link">
-            <faIcon icon="shopping-bag"></faIcon>
-          </router-link>
+          <CartButton />
           <router-link to="/search" class="btn btn-link">
             <faIcon icon="search"></faIcon>
           </router-link>
@@ -28,20 +26,39 @@
         <div class="col col-12 col-md-6 col-sm-6 mb-3">
           <div class="details">
             <h2>{{detail.name}}</h2>
-            <router-link :to="`/product-detail/${detail.groupId}`">{{detail.brand}}</router-link>
+            <router-link :to="`/product-list/${detail.groupId}`">{{detail.brand}}</router-link>
             <hr />
-            <div class="d-flex justify-content-between">
-              <span class="d-block">₹{{detail.discountedPrice}}</span>
-              <button class="btn btn-primary">Buy</button>
+            <div class="d-flex justify-content-between align-items-center">
+              <h3 class="d-block m-0">₹{{detail.discountedPrice}}</h3>
+              <span>
+                <button class="btn btn-dark mr-3" @click="addToCart">Add To Cart</button>
+                <button class="btn btn-primary">Buy</button>
+              </span>
             </div>
             <ul class="list-group mt-3">
-              <li class="list-group-item dropdown" @click="openPanel('details')">Details</li>
+              <li
+                class="list-group-item dropdown d-flex justify-content-between"
+                @click="openPanel('details')"
+              >
+                Details
+                <span :class="{'show': currentToggle == 'details'}">
+                  <faIcon icon="chevron-down"></faIcon>
+                </span>
+              </li>
               <div class="dropdown-menu" :class="{'show': currentToggle == 'details'}">
                 <p class="p-3">{{ detail.description }}</p>
               </div>
             </ul>
             <ul class="list-group mt-3">
-              <li class="list-group-item dropdown" @click="openPanel('shipping')">Shipping</li>
+              <li
+                class="list-group-item dropdown d-flex justify-content-between"
+                @click="openPanel('shipping')"
+              >
+                Shipping
+                <span :class="{'show': currentToggle == 'shipping'}">
+                  <faIcon icon="chevron-down"></faIcon>
+                </span>
+              </li>
               <div class="dropdown-menu" :class="{'show': currentToggle == 'shipping'}">
                 <p class="p-3">{{ detail.description }}</p>
               </div>
@@ -57,15 +74,16 @@ import { Vue, Component } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import { IProduct } from "@/interface/IProduct";
 import Navbar from "@/components/shopping/Navbar.vue";
+import CartButton from "@/components/shopping/CartButton.vue";
 
 @Component({
-  components: { Navbar },
+  components: { Navbar, CartButton },
   computed: mapGetters(["detail"])
 })
 export default class ProductDetails extends Vue {
   public detail!: IProduct;
   public productId!: number;
-  public currentToggle = "";
+  public currentToggle = "details";
   public created() {
     this.productId = +this.$route.params.prod_id;
     console.log(this.productId);
@@ -79,6 +97,9 @@ export default class ProductDetails extends Vue {
   public openPanel(panel: string) {
     this.currentToggle = this.currentToggle == panel ? "" : panel;
   }
+  public addToCart() {
+    this.$store.dispatch("addToCart", this.detail);
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -90,12 +111,19 @@ export default class ProductDetails extends Vue {
 
   .dropdown {
     cursor: pointer;
+    > span {
+      transform: rotate(0);
+      transition: transform 0.5s ease;
+    }
+    > span.show {
+      transform: rotate(180deg);
+      transition: transform 0.5s ease;
+    }
   }
   .dropdown-menu {
     position: relative;
   }
   .productImage img {
-    height: 50vh;
     max-height: 480px;
     margin: 0 auto;
     display: block;

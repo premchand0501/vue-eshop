@@ -18,9 +18,7 @@
         </template>
         <template v-slot:navRightButtons>
           <div class="btn-group">
-            <router-link to="/cart" class="btn btn-link">
-              <faIcon icon="shopping-bag"></faIcon>
-            </router-link>
+            <CartButton />
             <router-link to="/search" class="btn btn-link">
               <faIcon icon="search"></faIcon>
             </router-link>
@@ -40,6 +38,7 @@
       <transition name="slideup">
         <router-view />
       </transition>
+      <Cart />
     </div>
   </div>
 </template>
@@ -50,10 +49,19 @@ import SwiperWrapper from "@/components/shopping/SwiperWrapper.vue";
 import ProductGroup from "@/components/shopping/ProductGroup.vue";
 import SideMenu from "@/components/shopping/SideMenu.vue";
 import { mapGetters } from "vuex";
-import { IProduct, Query } from "@/interface/IProduct";
+import { IProduct, Query, ICartItems } from "@/interface/IProduct";
+import Cart from "@/components/shopping/Cart.vue";
+import CartButton from "@/components/shopping/CartButton.vue";
 
 @Component({
-  components: { Navbar, SwiperWrapper, ProductGroup, SideMenu },
+  components: {
+    Navbar,
+    SwiperWrapper,
+    ProductGroup,
+    SideMenu,
+    Cart,
+    CartButton
+  },
   computed: mapGetters([
     "allLandingProducts",
     "allLandingPageCategories",

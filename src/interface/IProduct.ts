@@ -23,3 +23,7 @@ export interface Query {
     key: string;
     value: any;
 }
+export interface ICartItems {
+    products: IProduct[];
+    count: number;
+}

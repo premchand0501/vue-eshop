@@ -9,9 +9,7 @@
       </template>
       <template v-slot:navRightButtons>
         <div class="btn-group">
-          <router-link to="/cart" class="btn btn-link">
-            <faIcon icon="shopping-bag"></faIcon>
-          </router-link>
+          <CartButton />
           <router-link to="/search" class="btn btn-link">
             <faIcon icon="search"></faIcon>
           </router-link>
@@ -25,32 +23,38 @@
           v-for="(prod, index) in allProducts"
           :key="`product_${index}`"
         >
-          <router-link class="productWrapp" :to="`/product-details/${prod.productId}`">
-            <div class="productImage">
+          <div class="productWrapp">
+            <router-link class="productImage" :to="`/product-details/${prod.productId}`">
               <img :src="prod.image" :alt="prod.name" class="img-fluid" />
-            </div>
+            </router-link>
             <div class="productDetails">
-              <p class="m-0">{{ prod.name }}</p>
-              <p>
-                <span>₹{{ prod.discountedPrice }}</span>&nbsp;
-                <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
-                <span class="text-success">{{ prod.discount }}% off</span>
-              </p>
+              <router-link class="detail" :to="`/product-details/${prod.productId}`">
+                <p>{{ prod.name }}</p>
+                <p>
+                  <span>₹{{ prod.discountedPrice }}</span>&nbsp;
+                  <span class="text-decoration-line-through">{{ prod.price }}</span>&nbsp;
+                  <span class="text-success">{{ prod.discount }}% off</span>
+                </p>
+              </router-link>
+              <button class="btn btn-outline-dark cartBtn" @click.stop="addToCart(prod)">
+                <faIcon icon="plus"></faIcon>
+              </button>
             </div>
-          </router-link>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
-import { IProductList, Query, IProduct } from '@/interface/IProduct';
-import Navbar from '@/components/shopping/Navbar.vue';
+import { Vue, Component } from "vue-property-decorator";
+import { mapGetters } from "vuex";
+import { IProductList, Query, IProduct } from "@/interface/IProduct";
+import Navbar from "@/components/shopping/Navbar.vue";
+import CartButton from "@/components/shopping/CartButton.vue";
 @Component({
-  components: { Navbar },
-  computed: mapGetters(['allProducts']),
+  components: { Navbar, CartButton },
+  computed: mapGetters(["allProducts"])
 })
 export default class ProductList extends Vue {
   public allProducts!: IProduct[];
@@ -60,14 +64,17 @@ export default class ProductList extends Vue {
     this.groupId = +this.$route.params.group_id;
     console.log(this.groupId);
     this.$store
-      .dispatch('loadProductsByCategory', {
-        key: 'groupId',
-        value: this.groupId,
+      .dispatch("loadProductsByCategory", {
+        key: "groupId",
+        value: this.groupId
       } as Query)
       .then(() => console.log(JSON.stringify(this.allProducts)));
   }
   public goBack() {
     this.$router.back();
+  }
+  addToCart(prod: IProduct) {
+    this.$store.dispatch("addToCart", prod);
   }
 }
 </script>
